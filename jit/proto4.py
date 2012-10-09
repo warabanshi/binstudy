@@ -110,6 +110,8 @@ getaddr = CFUNCTYPE(c_void_p, c_void_p)(lambda p: p)
 f       = CFUNCTYPE(c_void_p)(p)
 
 print("putchar address = %s" % hex(addressof(putchar)))
+print("putchar address = %s" % hex(addressof(libc.putchar)))
+libc.printf("putchar address = %p\n", putchar)
 print("putchar address = %s" % hex(getaddr(putchar)))
 
 # this is invalid code cause getaddr doesn't get the address of putchar function.
@@ -124,6 +126,6 @@ codes[7:15] = conv64(getaddr(putchar))
 
 memmove(p, addressof(codes), buflen)
 
-f() 
+#f() 
 
 munmap(p, buflen)

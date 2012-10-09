@@ -5,6 +5,15 @@ JIT sample 2
 how to get the memory space in simply way for brainf*ck is
 grub the memory space by python instruction and pass the address of it.
 
+how to debug native code
+1. output them to file
+   ex)
+    with open('native.bin', 'wb') as fp:
+        fp.write(p)
+2. disassemble it by nasm
+    $ ndisasm -b 64 native.bin
+3. inspect native code
+4. if you want edit it then use some binary editor and edit it
 '''
 
 import sys, struct
@@ -27,17 +36,24 @@ PROT_EXEC       = 4
 MAP_PRIVATE     = 2
 MAP_ANONYMOUS   = 0x20
 
+def conv32(dw):
+    return map(ord, struct.pack( "<l" if dw < 0 else "<L", dw))
+
 def conv64(dw):
     return map(ord, struct.pack("<q" if dw < 0 else "<Q", dw))
 
 def translate(source, r):
     spos        = 0
-    loop_label  = 0
-    loop_stack  = []
+
+    loop_index_stack    = []
+    jmp_index_stack   = []
+    back_index_stack  = []
 
     # initialize
     ## push r12
+    r.extend([0x41, 0x54])
     ## push r13
+    r.extend([0x41, 0x55])
     ## mov  rbx, 0x0000000000000000  (for set buffer)
     r.extend([0x48, 0xbb])
     r.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
@@ -72,29 +88,42 @@ def translate(source, r):
 
         elif s == '.':
             # mov   rdi, [rbx]
-            # call  putchar
-            r.extend([0x48, 0x8b, 0x3b, 0x41, 0xff, 0xd4])
+            r.extend([0x48, 0x8b, 0x3b])
+            # call  r12
+            r.extend([0x41, 0xff, 0xd4])
 
         elif s == ',':
             # call  getchar
+            r.extend([0x41, 0xff, 0xd5])
             # mov   [rbx], rax
-            r.extend([0x41, 0xff, 0xd5, 0x48, 0x89, 0x03])
+            r.extend([0x48, 0x89, 0x03])
 
         elif s == '[':
             # start_(loop_name):
             # cmp   byte ptr [rbx], 0
-            # jz    end_(loop_name)
-            None
+            # jz    dword end_(loop_name)
+            loop_index_stack.append(len(r))
+            r.extend([0x80, 0x3b, 0x00])
+            r.extend([0x0f, 0x84, 0x00, 0x00, 0x00, 0x00])
 
         elif s == ']':
-            # jmp   start_(loop_name)
+            # jmp   dword start_(loop_name)
             # end_(loop_name):
-            None
+            r.extend([0xe9, 0x00, 0x00, 0x00, 0x00])
+            loop_index = loop_index_stack.pop()
+
+            back_diff = loop_index - len(r)
+            r[len(r)-4:len(r)] = conv32(back_diff)
+
+            forward_diff = len(r) - loop_index + 9
+            r[loop_index+5:loop_index+9] = conv32(forward_diff)
 
         spos += 1
 
     ## pop r13
+    r.extend([0x41, 0x5d])
     ## pop r12
+    r.extend([0x41, 0x5c])
     ## ret
     r.extend([0xc3])
     return r
@@ -129,63 +158,19 @@ f       = CFUNCTYPE(c_void_p)(getaddr(p))
 
 print "bf_mem = %s, putchar = %s, getchar = %s" % (hex(getaddr(bf_mem)), hex(getaddr(putchar)), hex(getaddr(getchar)))
 
-bf_code[2:10]    = conv64(getaddr(bf_mem))
-bf_code[12:20]  = conv64(getaddr(putchar))
-bf_code[22:30]  = conv64(getaddr(getchar))
+bf_code[6:14]   = conv64(getaddr(bf_mem))
+bf_code[16:24]  = conv64(getaddr(putchar))
+bf_code[26:34]  = conv64(getaddr(getchar))
 
 # for debug
-print map(hex, bf_code)
+#print map(hex, bf_code)
 
 #memmove(p, addressof(bf_code), len(bf_code))
 print len(p), len(bf_code)
 p[:] = bf_code
+with open('jit.bin', "wb") as fp:
+    fp.write(p)
 f()
 
 munmap(p, len(bf_code))
 
-''' proto5.py
-codes = (c_ubyte * 128) (
-    0x41, 0x54,                                 # push  r12
-    0x41, 0x55,                                 # push  r13
-    0x53,                                       # push  rbx
-    0x49, 0xbd, 0x00, 0x00, 0x00, 0x00, 0x00,   # mov   r13, (long)
-    0x00, 0x00, 0x00,
-    0x49, 0xc7, 0xc4, 0x1a, 0x00, 0x00, 0x00,   # mov   r12, 0x1a
-    0x48, 0xc7, 0xc3, 0x41, 0x00, 0x00, 0x00,   # mov   rbx, 0x41
-    0x49, 0x83, 0xfc, 0x00,                     # cmp   r12, 0
-    0x74, 0x0e,                                 # je    <end>
-    0x48, 0x89, 0xdf,                           # mov   rdi, rbx
-    0x41, 0xff, 0xd5,                           # call  r13
-    0x48, 0xff, 0xc3,                           # inc   rbx
-    0x49, 0xff, 0xcc,                           # dec   r12
-    0xeb, 0xec,                                 # jmp   <loop>
-    0x48, 0xc7, 0xc7, 0x0a, 0x00, 0x00, 0x00,   # mov   rdi, 0xa
-    0x41, 0xff, 0xd5,                           # call  r13
-    0x5b,                                       # pop   rbx
-    0x41, 0x5d,                                 # pop   r13
-    0x41, 0x5c,                                 # pop   r12
-    0xc3,                                       # ret
-)
-
-buflen = len(codes)
-p = mmap(
-    0, buflen,
-    PROT_READ | PROT_WRITE | PROT_EXEC,
-    MAP_PRIVATE | MAP_ANONYMOUS,
-    -1, 0
-)
-
-getaddr = CFUNCTYPE(c_void_p, c_void_p)(lambda p: p)
-f       = CFUNCTYPE(c_void_p)(p)
-
-codes[7:15] = conv64(getaddr(putchar))
-
-# for debug
-#print map(hex, codes)
-
-memmove(p, addressof(codes), buflen)
-
-f() 
-
-munmap(p, buflen)
-'''
