@@ -115,7 +115,7 @@ def translate(source, r):
             back_diff = loop_index - len(r)
             r[len(r)-4:len(r)] = conv32(back_diff)
 
-            forward_diff = len(r) - loop_index + 9
+            forward_diff = len(r) - (loop_index + 9)
             r[loop_index+5:loop_index+9] = conv32(forward_diff)
 
         spos += 1
@@ -156,7 +156,7 @@ p = mmap(
 getaddr = CFUNCTYPE(c_void_p, c_void_p)(lambda p: p)
 f       = CFUNCTYPE(c_void_p)(getaddr(p))
 
-print "bf_mem = %s, putchar = %s, getchar = %s" % (hex(getaddr(bf_mem)), hex(getaddr(putchar)), hex(getaddr(getchar)))
+#print "bf_mem = %s, putchar = %s, getchar = %s" % (hex(getaddr(bf_mem)), hex(getaddr(putchar)), hex(getaddr(getchar)))
 
 bf_code[6:14]   = conv64(getaddr(bf_mem))
 bf_code[16:24]  = conv64(getaddr(putchar))
@@ -166,9 +166,8 @@ bf_code[26:34]  = conv64(getaddr(getchar))
 #print map(hex, bf_code)
 
 #memmove(p, addressof(bf_code), len(bf_code))
-print len(p), len(bf_code)
 p[:] = bf_code
-with open('jit.bin', "wb") as fp:
+with open('jit.out', "wb") as fp:
     fp.write(p)
 f()
 
