@@ -146,6 +146,6 @@ class NativeBf:
             with open(outputTarget, "wb") as fp:
                 fp.write(p)
 
-        munmap(p, len(bf_code))
-
+        return p
+        #munmap(p, len(bf_code))
 
