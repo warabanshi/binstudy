@@ -21,7 +21,7 @@ how to do it in simple is
 3. objdump the result of step 2 ($ objdump -d -M interl a.out)
 '''
 
-import sys, struct
+import sys, struct, time
 from ctypes import *
 
 libc = cdll.LoadLibrary("libc.so.6")
@@ -126,6 +126,9 @@ codes[7:15] = conv64(getaddr(putchar))
 
 memmove(p, addressof(codes), buflen)
 
-#f() 
+f() 
+
+# for process watch
+#time.sleep(60)
 
 munmap(p, buflen)
