@@ -1,0 +1,39 @@
+gcc a.c consist by some steps
+    1. a.c -> a.s
+    2. a.s -> a.o
+    3. a.o -> a.out
+you can see these steps what it did the command by
+    $ gcc -v a.c
+
+-----------------------------------------------------
+
+if you want to see what include in a.out of ELF format.
+it is possible in
+    $ readelf -a a.out
+
+-----------------------------------------------------
+ELF64 test
+
+-- tiny.s
+BITS 64
+GLOBAL main
+SECTION .text
+main:
+    mov     rax, 42
+    ret
+ 
+above assembly code expects return 42 by below commands
+
+$ nasm -f elf64 tiny.s
+$ gcc -Wall -s tiny.o
+$ ./a.out; echo $?
+42
+
+-----------------------------------------------------
+
+refer to the difference from 32bit and 64bit systemcall below
+    http://www.mztn.org/lxasm64/x86_x64_table.html
+
+-----------------------------------------------------
+
+elf specificication which you using is /usr/include/linux/elf.h
