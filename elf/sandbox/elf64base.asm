@@ -4,7 +4,7 @@ BITS 64
 ehdr:                                   ; ELF64_Ehdr(ELF header)
             db  0x7f, "ELF", 2, 1, 1    ; e_ident
     times 9 db  0                       ; e_ident
-            dw  1                       ; u16 e_type
+            dw  2                       ; u16 e_type
             dw  0x3e                    ; u16 e_machine /usr/include/linux/elf-em.h
                                         ; 62 = x86-64
             dd  0x01                    ; u32 e_version
@@ -23,7 +23,7 @@ ehdrsize    equ     $ - ehdr
 
 phdr:                                   ; ELF64_Phdr(program header)
             dd  1                       ; u32 p_type
-            dd  5                       ; u32 p_flags
+            dd  0x05                    ; u32 p_flags
             dq  0                       ; u64 p_offset
             dq  $$                      ; u64 p_vaddr
             dq  $$                      ; u64 p_paddr
