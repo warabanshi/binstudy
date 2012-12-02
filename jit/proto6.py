@@ -13,7 +13,6 @@ from ctypes import *
 
 libc = cdll.LoadLibrary("libc.so.6")
 free = libc.free
-printf = libc.printf
 
 mmap = libc.mmap
 mmap.restype = c_void_p
