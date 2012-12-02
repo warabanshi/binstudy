@@ -38,6 +38,4 @@ _start:
             mov     edi, 42
             syscall
 
-; entry my program
-
 filesize    equ     $ - $$
