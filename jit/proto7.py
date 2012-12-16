@@ -34,6 +34,52 @@ def conv32(dw):
 def conv64(qw):
     return map(ord, struct.pack("<q" if qw < 0 else "<Q", qw))
 
+def makeELF(bf, addr = None):
+
+    addr = 0x00 if addr == None else addr
+
+    # ELF header
+    e = []
+    e.extend([0x7f, 0x45, 0x4c, 0x46, 0x02, 0x01, 0x01])        # e_ident
+    e.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+    e.extend([0x02, 0x00])                  # u16 e_type
+    e.extend([0x3e, 0x00])                  # u16 e_machine
+    e.extend([0x01, 0x00, 0x00, 0x00])      # u32 e_version
+    e.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 e_entry
+    e.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 e_phoff
+    e.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 e_shoff
+    e.extend([0x00, 0x00, 0x00, 0x00])      # u32 e_flags
+    e.extend([0x00, 0x00])                  # u16 e_ehsize
+    e.extend([0x00, 0x00])                  # u16 e_phentisize
+    e.extend([0x01, 0x00])                  # u16 e_phnum
+    e.extend([0x00, 0x00])                  # u16 e_shentsize
+    e.extend([0x00, 0x00])                  # u16 e_shnum
+    e.extend([0x00, 0x00])                  # u16 e_shstrndx
+
+    # program header
+    p = []
+    p.extend([0x01, 0x00, 0x00, 0x00])      # u32 p_type
+    p.extend([0x05, 0x00, 0x00, 0x00])      # u32 p_flags
+    p.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_offset
+    p.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_vaddr
+    p.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_paddr
+    p.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_filesz
+    p.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_memsz
+    p.extend([0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_align
+
+    e[24:32] = conv64(addr + len(e) + len(p))   # set e_entry
+    e[32:40] = conv64(len(e))                   # set e_phoff
+    e[52:54] = conv16(len(e))                   # set e_ehsize
+    e[54:56] = conv16(len(p))                   # set e_phentisize
+
+    p[16:24] = conv64(addr + len(e))                # set p_vaddr
+    p[24:32] = conv64(addr + len(e))                # set p_paddr
+    p[32:40] = conv64(len(e) + len(p) + len(bf))    # set p_filesz
+    p[40:48] = conv64(len(e) + len(p) + len(bf))    # set p_memsz
+    #p[48:56] = conv64(addr + len(e))                # set p_align
+
+    return e + p + bf
+
 def translate(source, r):
     spos        = 0
 
@@ -118,18 +164,10 @@ def translate(source, r):
 
     ## pop rbx
     r.extend([0x5b])
-    ## ret
-    r.extend([0xc3])
+    ## exit
+    #r.extend([0xc3])
     return r
 
-"""
-bf_mem = mmap(
-    0, 30000,
-    PROT_READ | PROT_WRITE | PROT_EXEC,
-    MAP_PRIVATE | MAP_ANONYMOUS,
-    -1, 0
-)
-"""
 bf_mem = (c_ubyte * 30000)()
 
 f = open(sys.argv[1])
@@ -139,9 +177,11 @@ f.close()
 bf_code = []
 bf_code = translate(source, bf_code)
 
-mmap.restype = POINTER(ARRAY(c_ubyte, len(bf_code)))
+elfLength = len(makeELF(bf_code))
+
+mmap.restype = POINTER(ARRAY(c_ubyte, elfLength))
 p = mmap(
-    0, len(bf_code),
+    0, elfLength,
     PROT_READ | PROT_WRITE | PROT_EXEC,
     MAP_PRIVATE | MAP_ANONYMOUS,
     -1, 0
@@ -151,15 +191,15 @@ getaddr = CFUNCTYPE(c_void_p, c_void_p)(lambda p: p)
 f       = CFUNCTYPE(c_void_p)(getaddr(p))
 
 bf_code[3:11]   = conv64(getaddr(bf_mem))
+elf = makeELF(bf_code, getaddr(p))
 
 # for debug
 #print map(hex, bf_code)
 
-#memmove(p, addressof(bf_code), len(bf_code))
-p[:] = bf_code
+# output ELF format file
+p[:] = elf
 with open('jit.out', "wb") as fp:
     fp.write(p)
-f()
 
-munmap(p, len(bf_code))
+munmap(p, len(elf))
 

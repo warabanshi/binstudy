@@ -1,0 +1,1000 @@
+   15  ls
+   16  cat asm.o
+   17  pdw
+   18  ls
+   19  pwd
+   20  tmux
+   21  ls
+   22  vi proto1.py
+   23  ls
+   24  less proto1.py
+   25  less proto2.py
+   26  vi proto2
+   27  vi proto2.py
+   28  vi proto1.py
+   29  less proto2.py
+   30  pwd
+   31  ls
+   32  cd ..
+   33  ls
+   34  cat disasm
+   35  history | grep dis
+   36  ls
+   37  bvi a.out 
+   38  wd
+   39  ls
+   40  pwd
+   41  cd translate/
+   42  ls
+   43  ls -l
+   44  cat transed.c
+   45  ls
+   46  ls -l
+   47  /sbin/ifconfig
+   48  ping www.google.com
+   49  ping 192.168.11.1
+   50  ping 173.194.38.116
+   51  ls
+   52  python3
+   53  pw
+   54  cd ..
+   55  ls
+   56  cd jit/
+   57  ls
+   58  python proto1.py 
+   59  python proto2.py 
+   60  PWD
+   61  LS
+   62  pwd
+   63  ls
+   64  pythone3
+   65  python3
+   66  cd ../../..
+   67  ls
+   68  vi memo120909.txt
+   69  echo $PATH
+   70  locate
+   71  find / -name libc.so.*
+   72  psa x
+   73  ps aux
+   74  ps aux | grep tmux
+   75  exit
+   76  tmux
+   77  ps aux | grep tmux
+   78  tmux attach
+   79  tmux
+   80  pd
+   81  ls
+   82  cd development/
+   83  ls
+   84  cd compiler/
+   85  ls
+   86  cd translate/
+   87  ls
+   88  ls -l
+   89  cd ../jit/
+   90  ls
+   91  vi proto3.py
+   92  pwd
+   93  ls
+   94  cd development/
+   95  ls
+   96  cd development/compiler/jit/
+   97  ls
+   98  vi proto3.py
+   99  ls
+  100  cp proto3.py proto4.py
+  101  vi proto4.py
+  102  vi proto3.py
+  103  vi proto4.py
+  104  su -
+  105  cd development/
+  106  ls
+  107  cd compiler/
+  108  ls
+  109  cd jit/
+  110  ls
+  111  less proto2.py
+  112  pwd
+  113  ls
+  114  cd..
+  115  ls
+  116  cd translate/
+  117  ls
+  118  vi asm_sample/sample.s
+  119  ls
+  120  cd ..
+  121  ls
+  122  cd jit/
+  123  ls
+  124  cd ..
+  125  ls
+  126  cd asm/
+  127  ls
+  128  cd ../
+  129  ls
+  130  d translate/
+  131  ls
+  132  pwd
+  133  cd jit/
+  134  ls
+  135  cp ../translate/asm_sample/sample4.s .
+  136  ls
+  137  ls -l
+  138  gcc -g -c sample4.s 
+  139  ls -l
+  140  gcc -o sample4.s 
+  141  gcc sample4.s 
+  142  ls -lh
+  143  ./a.out 
+  144  vi sample4.s
+  145  ls
+  146  ls -l
+  147  ls -la
+  148  mv .ssh/ .ssh.org
+  149  ls
+  150  ls -l
+  151  env | grep -i ld
+  152  ssh
+  153  rpm -qi openssl
+  154  zypper wp ssh
+  155  ssh
+  156  echo $LD_LIBRARY_PATH
+  157  export LD_LIBRARY_PATH=/usr/local/openssh/lib:$LD_LIBRARY_PATH
+  158  echo $LD_LIBRARY_PATH
+  159  ssh
+  160  /usr/local/openssh/bin/ssh
+  161  /usr/local/openssh/bin/ssh -h
+  162  /usr/local/openssh/bin/ssh --help
+  163  rpm -qi openssh
+  164  rpm -ql openssh
+  165  rpm -ql openssh | grep bin
+  166  echo $path
+  167  echo $PATH
+  168  export PATH=/usr/local/openssh/bin:/usr/local/openssh/sbin:$PATH
+  169  echo $PATH
+  170  ssh
+  171  ls
+  172  ls -a
+  173  vi .bashrc
+  174  exit
+  175  su -
+  176  pwd
+  177  tmux
+  178  pwd
+  179  tmux
+  180  su -
+  181  ls
+  182  ls -a
+  183  cat .testdayo*
+  184  pwd
+  185  ls
+  186  ls -a
+  187  cat memo120909.txt
+  188  pwd
+  189  ls
+  190  ls -a
+  191  cat .xsession-errors
+  192  ls -a
+  193  ls -la
+  194  date
+  195  ls -l
+  196  vi .bashrc
+  197  ls -a
+  198  head .xsession-errors 
+  199  ls -a /root/
+  200  su -
+  201  pwd
+  202  ls
+  203  ls -al
+  204  ls -a
+  205  tmux
+  206  ls -la
+  207  vi .xsession-errors
+  208  ls
+  209  ls -a
+  210  cp .xsession-errors .xsession-errors.log
+  211  vi .bash
+  212  vi .bashrc
+  213  ls -a
+  214  cat memo120909.txt
+  215  cat .testdayo*
+  216  ls -a
+  217  cat .xsession-errors.log
+  218  cp .xsession-errors.log Dropbox/
+  219  ls -a
+  220  cat .testdayo
+  221  cat .testdayo2
+  222  cat .testdayo.1
+  223  ls /usr/local/src/
+  224  ssh --version
+  225  cd /usr/local/src/decompress/
+  226  ls
+  227  cd 
+  228  vi .bashrc
+  229  ls -la
+  230  ls -a
+  231  cp .tmux.conf ~/Dropbox/environment/
+  232  /sbin/ifconfig
+  233  ping 192.168.0.1
+  234  /sbin/ifconfig
+  235  ping 192.168.0.1
+  236  /sbin/ifconifg
+  237  /sbin/ifconfig 
+  238  ping 192.168.0.1
+  239  vi /etc/resolv.conf
+  240  exit
+  241  su -
+  242  dig www.google.com
+  243  /sbin/ifconfig
+  244  ping 192.168.0.1
+  245  su -
+  246  ls
+  247  ls -a
+  248  cd .kde4/
+  249  ls
+  250  cd Autostart/
+  251  ls
+  252  cd ../share/
+  253  ls
+  254  ls apps/
+  255  ls *
+  256  cd config/
+  257  ls
+  258  grep -i firefox *
+  259  vi kdeglobals
+  260  exit
+  261  ls
+  262  cd .kde4/
+  263  ls
+  264  cd share/
+  265  ls
+  266  cd config/
+  267  ls
+  268  vi kdeglobals
+  269  cd ~
+  270  ls
+  271  ps aux
+  272  tmux
+  273  vmstat  3
+  274  tmux
+  275  exit
+  276  pwd
+  277  ls
+  278  python proto4.py 
+  279  python proto3.py 
+  280  ls
+  281  pwd
+  282  ls
+  283  python proto4
+  284  python proto4.py 
+  285  ls
+  286  cat sample4.s
+  287  ./a.out 
+  288  python proto4.py 
+  289  history | grep obj
+  290  objdump -S asm.o 
+  291  ls
+  292  objdump -S sample4.o
+  293  objdump -S sample4.o | less
+  294  history | less
+  295  bvi sample4.o 
+  296  ls
+  297  ls -lh
+  298  objdump -S sample4.o | less
+  299  objdump -S sample4.o
+  300  python proto4.py 
+  301  ls -lh
+  302  python proto4.py 
+  303  ls
+  304  cat proto3.py
+  305  vi proto3.py
+  306  ls
+  307  python proto4.py 
+  308  man conv32
+  309  python proto4.py 
+  310  ls
+  311  vi proto4.py
+  312  ls
+  313  python proto5.py 
+  314  vi proto4.py
+  315  python proto5.py 
+  316  vi proto4.py
+  317  ls
+  318  objdump -S sample4.o
+  319  ls
+  320  vi proto4.py
+  321  objdump -S sample4.o
+  322  python proto5.py 
+  323  ls
+  324  vi sample5.s
+  325  gcc sample5.s 
+  326  ls
+  327  ./a.out 
+  328  vi sample5.s
+  329  gcc sample5.s 
+  330  ./a.out 
+  331  vi sample5.s
+  332  ./a.out; ./a.out 
+  333  gcc sample5.s; ./a.out 
+  334  vi sample5.s
+  335  gcc sample5.s; ./a.out 
+  336  vi sample5.s
+  337  gcc sample5.s; ./a.out 
+  338  vi sample5.s
+  339  gcc sample5.s; ./a.out 
+  340  vi sample5.s
+  341  python proto5.py 
+  342  ls
+  343  vi sample5.s
+  344  python proto5.py 
+  345  vi sample5.s
+  346  python proto5.py 
+  347  ls
+  348  vi sample.s
+  349  cp sample4.s sample.s
+  350  vi sample.s
+  351  gcc sample.s 
+  352  vi sample.s
+  353  gcc sample.s 
+  354  ls
+  355  ./a.out 
+  356  objdump -S a.out 
+  357  objdump -S a.out | less
+  358  vi sample.s
+  359  gcc sample.s 
+  360  objdump -S a.out | less
+  361  python proto4.py 
+  362  objdump -S a.out | less
+  363  ls
+  364  vi sample2.s
+  365  as sample2.s 
+  366  ls
+  367  objdump -d a.out 
+  368  objdump -d -M intel a.out 
+  369  vi sample2.s
+  370  objdump -d -M intel a.out 
+  371  as sample2.s 
+  372  objdump -d -M intel a.out 
+  373  ls
+  374  python proto4.py 
+  375  python proto4.py
+  376  objdump -d a.out 
+  377  objdump -d -M intel a.out 
+  378  python proto4.py
+  379  ls
+  380  vi sample.s
+  381  vi sample2.s
+  382  as sample2.s 
+  383  objdump -d -M intel a.out 
+  384  vi sample2.s
+  385  as sample2.s 
+  386  objdump -d -M intel a.out 
+  387  vi sample2.s
+  388  as sample2.s 
+  389  objdump -d -M intel a.out 
+  390  python proto4.py
+  391  vi sample2.s
+  392  as sample2.s 
+  393  objdump -d -M intel a.out 
+  394  vi sample2.s
+  395  as sample2.s 
+  396  objdump -d -M intel a.out 
+  397  python proto4.py
+  398  objdump -d -M intel a.out 
+  399  python proto4.py
+  400  vi sample2.s
+  401  as sample2.s 
+  402  objdump -d -M intel a.out 
+  403  python proto4.py
+  404  ps aux | grep python
+  405  kill 13759
+  406  ps aux | grep python
+  407  kill -9 13759
+  408  ps aux | grep python
+  409  python proto4.py
+  410  ls
+  411  vi sample2.s
+  412  as sample2.s 
+  413  objdump -d -M intel a.out 
+  414  python proto4.py
+  415  objdump -d -M intel a.out 
+  416  python proto4.py
+  417  objdump -d -M intel a.out 
+  418  python proto4.py
+  419  objdump -d -M intel a.out 
+  420  python proto4.py
+  421  cat sample4.s
+  422  gcc sample4.s
+  423  ./a.out 
+  424  gcc sample4.s
+  425  ./a.out 
+  426  python proto4.py
+  427  ls
+  428  python proto4.py
+  429  ls
+  430  cat sample2.s
+  431  ls
+  432  cat sample4.s
+  433  ls
+  434  ls -l
+  435  cat proto1.py
+  436  cat proto2.py
+  437  ls
+  438  cat proto3.py
+  439  ls
+  440  cd ..
+  441  ls
+  442  cd ..
+  443  ls
+  444  cd assembler/
+  445  ls
+  446  ls -lh
+  447  cd ..
+  448  ls
+  449  rm -r assembler/
+  450  ls -l
+  451  cat java/
+  452  ls java/
+  453  cd compiler/
+  454  ls
+  455  ls -l
+  456  ls ialpl/
+  457  cd ialpl/
+  458  ls -l
+  459  ./sample2 
+  460  ls
+  461  cat sample2.lst
+  462  ls
+  463  cat sample1.s
+  464  cat sample2.
+  465  cat sample2.s
+  466  cd ..
+  467  ls
+  468  rm -r ialpl/
+  469  ls -l
+  470  cat memo2.txt
+  471  ls
+  472  cat basic.bf
+  473  ls
+  474  ls -l
+  475  cat disasm
+  476  ls
+  477  rm disasm 
+  478  ls
+  479  ls -l
+  480  ls
+  481  ls repository/
+  482  ls asm/
+  483  ls translate/
+  484  mv basic.bf translate/
+  485  ls
+  486  ls -l
+  487  ./a
+  488  ./a.out 
+  489  rm a.out 
+  490  ls
+  491  ls -l
+  492  cd asm/
+  493  ls
+  494  ls -l
+  495  ls pic/
+  496  ./test
+  497  ls -a
+  498  ls -l
+  499  cat proto10.s
+  500  cd ..
+  501  ls
+  502  ls -l
+  503  cd jit/
+  504  ls
+  505  ls -l
+  506  cd ..
+  507  ls
+  508  cd translate/
+  509  ls
+  510  ls -l
+  511  cat conv_asm.py
+  512  ls
+  513  cat conv_asm.py
+  514  vi conv_asm.py
+  515  ls
+  516  cd ..
+  517  ks
+  518  ls
+  519  cd jit/
+  520  cp ../translate/conv_asm.py .
+  521  ls
+  522  ls -l
+  523  vi sample5.s
+  524  ls
+  525  ls -l
+  526  mv sample.s sample1.s
+  527  ls
+  528  ls -l
+  529  vi sample5.s
+  530  as sample5.s 
+  531  objdump -d a.out 
+  532  ls
+  533  cat conv_asm.py
+  534  vi conv_asm.py
+  535  ls
+  536  vi sample4.s
+  537  vi proto4.py
+  538  vi proto5.py
+  539  iv conv_asm.py 
+  540  vi conv_asm.py
+  541  vi proto5.py
+  542  vi conv_asm.py
+  543  vi proto5.py
+  544  vi conv_asm.py
+  545  cp conv_asm.py conv_bin.py
+  546  vi conv_bin.py
+  547  ls
+  548  vi proto5.py
+  549  ls
+  550  ls -l
+  551  test.bf
+  552  vi test.bf
+  553  ls
+  554  vi proto5.py
+  555  ls
+  556  cd ..
+  557  ls
+  558  git pull
+  559  /sbin/ifconfig
+  560  cat /etc/hosts
+  561  ping www.tsukuyo.cc
+  562  ls
+  563  cd ..
+  564  s
+  565  ls
+  566  cd ..
+  567  cd -
+  568  ls
+  569  ls -l
+  570  cd ..
+  571  ls
+  572  ls -lh
+  573  cd ..
+  574  ls -l
+  575  cat memo120909.txt
+  576  ls
+  577  cd development/
+  578  ls
+  579  cd cm
+  580  cd om
+  581  cd compiler/
+  582  ls
+  583  cat memo2.txt
+  584  ls
+  585  cat memo.txt
+  586  ls
+  587  cat disasm
+  588  ls
+  589  pwd
+  590  ls
+  591  cd development/
+  592  ls
+  593  ls -a
+  594  cd compiler/
+  595  ls
+  596  git pull
+  597  git push
+  598  cat translate/jit_test.py
+  599  exit
+  600  tmux
+  601  ls
+  602  cd development/
+  603  ls
+  604  ls -l
+  605  cd compiler/
+  606  ls
+  607  cd jit/
+  608  ls
+  609  ls -l
+  610  cat proto5.py
+  611  vi proto5.py
+  612  vi proto1.py
+  613  vi proto2.py
+  614  pwd
+  615  cd development/
+  616  ls
+  617  cd compiler/
+  618  git commit -a
+  619  git add .
+  620  git commit -a
+  621  git push
+  622  exit
+  623  tmux
+  624  tmux -u
+  625  ssh eirin@192.168.0.80
+  626  ssh eirin@192.168.0.81
+  627  ls
+  628  cd jit/
+  629  ls
+  630  ls -l
+  631  vi proto5.py
+  632  pwd
+  633  ls
+  634  cd jit/
+  635  ls
+  636  git commit -a
+  637  git push
+  638  pwd
+  639  ls
+  640  cd ..
+  641  ls
+  642  ls -l
+  643  mkdir math
+  644  cd math/
+  645  ls -l
+  646  mkdir day2
+  647  ls -l
+  648  cd day2/
+  649  c d~
+  650  cd ~
+  651  tmux -u
+  652  pwd
+  653  ls -l
+  654  cd com
+  655  ls
+  656  cd development/
+  657  ls
+  658  cd compiler/jit/
+  659  ls
+  660  cd ../math/
+  661  ls
+  662  mkdir day1
+  663  pwd
+  664  cd ..
+  665  ls
+  666  cd *
+  667  cd ..
+  668  ls *
+  669  pwd
+  670  cd ~
+  671  ls
+  672  ls -l
+  673  cd development/
+  674  ls -l
+  675  ls compiler/
+  676  ls math/
+  677  cd math/
+  678  ls
+  679  cp -r ../compiler/math/* .
+  680  ls
+  681  mv plot.dat test.rb day1
+  682  ls -l
+  683  rm -r ../compiler/math/
+  684  ls -l
+  685  cd day2/
+  686  ls -l
+  687  vi memo.txt
+  688  pwd
+  689  df -h
+  690  cd /media/
+  691  ls
+  692  lsof
+  693  vi memo.txtls
+  694  ls
+  695  cd ~
+  696  ls
+  697  cd development/
+  698  cd math/day2
+  699  ls
+  700  ls -l
+  701  cd graph/
+  702  cd ruby/
+  703  ls -l
+  704  cat adjlist.rb
+  705  ls
+  706  cat adjmat.rb
+  707  ls
+  708  vi adjmat.rb
+  709  ls ../haskell/
+  710  ls
+  711  cat dijkstra.rb
+  712  at graph_algorithm.rb 
+  713  cat graph_algorithm.rb
+  714  cd ../..
+  715  ls
+  716  vi memo.txt
+  717  ls -l
+  718  pwd
+  719  ls -lh
+  720  vi sample.py
+  721  ls
+  722  cp sample.py sample2.py
+  723  mv sample.py sample1.py
+  724  vi sample2.py
+  725  ls
+  726  vi graph.list
+  727  ls
+  728  vi sample1.py
+  729  ls
+  730  python sample1.py 
+  731  vi sample1.py
+  732  python sample1.py 
+  733  ls
+  734  mv sample1.py preorder.py
+  735  vi sample2.py
+  736  mv sample2.py postorder.py
+  737  vi preorder.py
+  738  vi postorder.py
+  739  python postorder.py 
+  740  python preorder.py 
+  741  vi dijkstra.py
+  742  ls
+  743  pwd
+  744  cd com
+  745  ls
+  746  cd development/compiler/
+  747  ls
+  748  c math/day2/
+  749  cd math/day2/
+  750  ls -l
+  751  pwd
+  752  ls
+  753  ls -l
+  754  pwd
+  755  ls -l
+  756  pwd
+  757  cd ../../
+  758  ls
+  759  cd ..
+  760  ls
+  761  cd math/
+  762  ls
+  763  cd day2
+  764  ls -l
+  765  ls
+  766  cd graph/
+  767  ls
+  768  cat ruby/
+  769  ls
+  770  ls -l
+  771  cd ruby/
+  772  ls -l
+  773  cat adjmat
+  774  cat adjmat.rb
+  775  ls -lh
+  776  pwd
+  777  ls -l
+  778  diff adjlist.rb adjlist_w.rb 
+  779  ls
+  780  cd ..
+  781  ls
+  782  cd ..
+  783  ls
+  784  python sample.py 
+  785  ls
+  786  cd ..
+  787  ls
+  788  cat day2/graph/ruby/dfs_sample.rb
+  789  cat day2/graph/ruby/graph_algorithm.rb
+  790  /successor
+  791  vi day2/graph/ruby/graph_algorithm.rb
+  792  l
+  793  vi day2/graph/ruby/adjmat.rb
+  794  ls
+  795  cd day2
+  796  ls
+  797  python sample.py 
+  798  ls
+  799  cd graph/
+  800  ls
+  801  ls -l
+  802  cd ruby/
+  803  ls
+  804  cat adjmat
+  805  cat adjmat.rb
+  806  cat dfs_sample.rb
+  807  ls
+  808  vi ../../sample1.py
+  809  ls -l
+  810  vi dfs_sample.rb
+  811  ls
+  812  ruby dfs_sample.rb 
+  813  cat dfs_sample.rb
+  814  cat adjlist.rb
+  815  ls
+  816  cat dfs_sample.rb
+  817  vi dfs_sample.rb
+  818  vi graph_algorithm.rb
+  819  head -20 graph_algorithm.rb 
+  820  ls
+  821  cd ../../
+  822  ls
+  823  cat preorder.py
+  824  ps aux
+  825  tmux -u
+  826  ps aux
+  827  ls
+  828  cd development/
+  829  ls
+  830  ls -l
+  831  tmux -u
+  832  ps aux
+  833  ls
+  834  cd development/
+  835  ls
+  836  ls -l
+  837  ls -a
+  838  cd compiler/
+  839  ls -la
+  840  git commit -a
+  841  vi .gitignore
+  842  git add .gitignore
+  843  git commit
+  844  git commit -a
+  845  rm translate/a.out 
+  846  git commit -a
+  847  git pull
+  848  git push
+  849  git status
+  850  git add jit/
+  851  git commit
+  852  ls
+  853  cd jit/
+  854  ls -l
+  855  vi sample5.s
+  856  history
+  857  history | grep ndis
+  858  pwd
+  859  ls
+  860  ls -l
+  861  cat bin
+  862  ndisasm -h
+  863  ndisasm -b 64 bin 
+  864  ndisasm -b 64 bin | less
+  865  ls -l
+  866  vi proto5.py
+  867  git commit -a
+  868  git push
+  869  pwd
+  870  ls
+  871  ls -l
+  872  cd development/
+  873  ls -l
+  874  git clone https://github.com/warabanshi/binstudy.git
+  875  ls
+  876  ls -l
+  877  cd binstudy/
+  878  ls -l
+  879  cd jit/
+  880  ls
+  881  ls -l
+  882  cat test.bf
+  883  rm test.bf 
+  884  git rm test.bf
+  885  git commit -m 'remove unused file'
+  886  python proto5.py ../bf/hello.bf 
+  887  cd ./../
+  888  ls
+  889  cd ..
+  890  ls
+  891  cd compiler/jit/
+  892  git commit -a
+  893  git push
+  894  ls
+  895  python proto5.py ../bf/hello.bf 
+  896  vi proto5.py
+  897  ls -l
+  898  ndisasm -b 64 jit.bin 
+  899  ndisasm -b 64 jit.bin | less
+  900  vi proto5.py
+  901  ndisasm -b 64 jit.bin | less
+  902  vi proto5.py
+  903  tmux -u
+  904  ls
+  905  vi proto5.py
+  906  git commit -a
+  907  rm jit.bin 
+  908  vi proto5.py
+  909  git commit -a
+  910  cd ../
+  911  ls
+  912  cd ..
+  913  ls
+  914  cd binstudy/
+  915  ls
+  916  cd jit/
+  917  ls
+  918  cp ../../compiler/jit/proto5.py .
+  919  ls
+  920  vi proto5.py
+  921  git commit -a
+  922  rm jit.bin 
+  923  python proto5.py ../bf/hello.bf 
+  924  git commit -a
+  925  git push
+  926  ls
+  927  git status
+  928  git pull
+  929  git push
+  930  cd ..
+  931  ls -l
+  932  ls
+  933  python proto5.py ../bf/hello.bf 
+  934  python proto5.py ../bf/prime.bf 
+  935  ls
+  936  cd ..
+  937  ls
+  938  cat bf/hello.bf
+  939  ls bf
+  940  cat bf/aiueo.bf
+  941  cd jit/
+  942  ls
+  943  python proto5.py ../bf/hello.bf 
+  944  python proto5.py ../bf/aiueo.bf 
+  945  tmux -u
+  946  pwdls
+  947  uls
+  948  ls
+  949  ls -l
+  950  readelf -S a.out 
+  951  readelf -S a.out | less
+  952  readelf -l a.out | less
+  953  readelf -s sample4.o 
+  954  tmux -u
+  955  pwd
+  956  ls
+  957  su -
+  958  pwd
+  959  ls
+  960  cat hello.c
+  961  ls
+  962  cat hello.c
+  963  cat simple.c
+  964  gcc hello.c 
+  965  ./a.out 
+  966  gcc hello.c 
+  967  ./a.out 
+  968  gcc -v hello.c 
+  969  gcc -v -m32 hello.c 
+  970  gcc -m32 hello.c 
+  971  ls
+  972  vi hello.c
+  973  gcc -m32 hello.c 
+  974  ls
+  975  gcc -v hello.c 
+  976  ls
+  977  cat simple.c
+  978  gcc --help | less
+  979  ls
+  980  gcc -Wall -s hello.c simple.c 
+  981  gcc hello.c 
+  982  gcc simple.c 
+  983  gcc -Wall -s simple.c 
+  984  wc -c a.out 
+  985  gcc -Wall -s -O3simple.c 
+  986  gcc -Wall -s -O3 simple.c 
+  987  wc -c a.out 
+  988  ls
+  989  mv simple.c tiny.c
+  990  vi tiny.s
+  991  nasm tiny.s
+  992  nasm -f elf tiny.s
+  993  vi tiny.s
+  994  vi tiny2.s
+  995  cp tiny2.s tiny3.s
+  996  vi tiny3.s
+  997  vi tiny2.s
+  998  pwd
+  999  ls
+ 1000  readelf -a tiny3.o 
+ 1001  readelf -a tiny3.o | less
+ 1002  bvi tiny3.o
+ 1003  vi tiny3.s
+ 1004  bvi tiny3.o
+ 1005  ls
+ 1006  bvi a.out 
+ 1007  ls
+ 1008  cat tiny3.s
+ 1009  bvi a.out 
+ 1010  readelf -a a.out 
+ 1011  ls
+ 1012  bvi elf64base.asm 
+ 1013  bvi a.out 
+ 1014  history > history2

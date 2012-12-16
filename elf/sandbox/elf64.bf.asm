@@ -10,14 +10,14 @@ ehdr:                                   ; ELF64_Ehdr(ELF header)
             dd  0x01                    ; u32 e_version
             dq  _start                  ; u64 e_entry
             dq  phdr - $$               ; u64 e_phoff
-            dq  shdr - $$               ; u64 e_shoff
+            dq  0                       ; u64 e_shoff
             dd  0                       ; u32 e_flags
             dw  ehdrsize                ; u16 e_ehsize
             dw  phdrsize                ; u16 e_phentisize
             dw  1                       ; u16 e_phnum
-            dw  0x40                    ; u16 e_shentsize
-            dw  3                       ; u16 e_shnum
-            dw  2                       ; u16 e_shstrndx
+            dw  0                       ; u16 e_shentsize
+            dw  0                       ; u16 e_shnum
+            dw  0                       ; u16 e_shstrndx
 
 ehdrsize    equ     $ - ehdr
 
@@ -33,40 +33,13 @@ phdr:                                   ; ELF64_Phdr(program header)
 
 phdrsize    equ     $ - phdr
 
+section .text
+    mem     times 30000 db 0
+
 _start:
             mov     eax, 60
             mov     edi, 42
             syscall
 
-shstrtab:
-db 0
-_text:
-db ".text", 0
-_shstrtab:
-db ".shstrtab", 0
-
-shdr:
-            dd  0                       ; u32 sh_name
-            dd  0
-            dq  0, 0, 0, 0
-            dd  0, 0
-            dq  0, 0
-
-            dd  _text - shstrtab
-            dd  1
-            dq  6
-            dq _start
-            dq _start - $$
-            dq  shstrtab - _start
-            dd 0, 0
-            dq 4, 0
-
-            dd  _shstrtab - shstrtab
-            dd  3
-            dq  0, 0
-            dq  shstrtab - $$
-            dq  shdr - shstrtab
-            dd 0, 0
-            dq 1, 0
-
 filesize    equ     $ - $$
+
