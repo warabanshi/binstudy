@@ -1,7 +1,10 @@
 BITS 64
 GLOBAL _start
+
 SECTION .bss
-    resb    32
+    mem     resb    30000
+
 SECTION .text
 _start:
+    lea     rbx, mem
     ret

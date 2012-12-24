@@ -143,3 +143,19 @@ $ objdump -d a.out
 if you want to getting the disassembled code by objdump in above.
 you have to implement section header in nasm.asm.
 
+--------------------------------------------------------
+
+you can easy to use httpd server in python
+
+$ python -m SimpleHTTPServer 8080
+
+*port is option
+
+--------------------------------------------------------
+
+if set the size more than filesize in memsize of ELF program header
+then the memory over the size of file areas are considered .bss area
+
+by Linker & Loader P.69
+
+

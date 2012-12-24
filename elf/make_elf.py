@@ -113,14 +113,12 @@ def makeELF(bf):
 
     filesize = len(e + p + bf + t + s)
 
-    e[24:32] = conv64(addr + len(e) + len(p))   # set e_entry
+    e[24:32] = conv64(addr + len(e + p))   # set e_entry
     e[32:40] = conv64(len(e))                   # set e_phoff
     e[40:48] = conv64(len(e + p + bf + t))      # set e_shoff
     e[52:54] = conv16(len(e))                   # set e_ehsize
     e[54:56] = conv16(len(p))                   # set e_phentisize
 
-    #p[16:24] = conv64(addr + len(e))                # set p_vaddr
-    #p[24:32] = conv64(addr + len(e))                # set p_paddr
     p[16:24] = conv64(addr)                 # set p_vaddr
     p[24:32] = conv64(addr)                 # set p_paddr
     p[32:40] = conv64(filesize)             # set p_filesz
@@ -132,11 +130,11 @@ def makeELF(bf):
     s[96:104] = conv64(len(t))          # set sh_size
 
     s[128:132] = conv32(1)              # set sh_name
-    s[144:152] = conv64(addr + len(e) + len(p))     # set sh_addr
+    s[144:152] = conv64(addr + len(e + p))     # set sh_addr
     s[152:160] = conv64(len(e+p))       # set sh_offset
     s[160:168] = conv64(len(bf))        # set sh_size
 
-    bf[3:11]   = conv64(addr + filesize)
+    bf[2:10]   = conv64(addr + filesize)
 
     return e + p + bf + t + s
 
@@ -157,7 +155,7 @@ def translate(source, r):
 
     # initialize
     ## push rbx
-    r.extend([0x53])
+    #r.extend([0x53])
     ## mov  rbx, 0x0000000000000000  (for set buffer)
     r.extend([0x48, 0xbb])
     r.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
@@ -231,9 +229,10 @@ def translate(source, r):
         spos += 1
 
     ## pop rbx
-    r.extend([0x5b])
+    #r.extend([0x5b])
     ## exit
-    #r.extend([0xc3])
+    r.extend([0xc3])
+
     return r
 
 #bf_mem = (c_ubyte * 30000)()
@@ -267,7 +266,7 @@ elf = makeELF(bf_code)
 
 # output ELF format file
 p[:] = elf
-with open('jit.out', "wb") as fp:
+with open('elf.out', "wb") as fp:
     fp.write(p)
 
 munmap(p, len(elf))
