@@ -1,0 +1,1000 @@
+  326  ls elf/
+  327  vi elf/a.ph
+  328  ls
+  329  cd translate/
+  330  ls
+  331  cd ../
+  332  ls
+  333  cd elf/
+  334  ls
+  335  cd sandbox/
+  336  ls
+  337  vi elf64base.asm
+  338  pwd
+  339  ls
+  340  cd ../
+  341  ls
+  342  cd -
+  343  vi elf64base.asm
+  344  ls
+  345  ./a.out 
+  346  echo $?
+  347  readelf a.out 
+  348  readelf -a a.out 
+  349  readelf -a a.out | less
+  350  ls
+  351  vi elf64base.asm
+  352  readelf -a a.out | less
+  353  vi elf64base.asm
+  354  ls
+  355  pwd
+  356  vi ../../jit/a.result
+  357  ls
+  358  vi elf64base.asm
+  359  vi ../../jit/a.result
+  360  ls
+  361  readelf -l a.out 
+  362  vi ../../jit/a.result
+  363  vi elf64base.asm
+  364  readelf -l a.out 
+  365  vi elf64base.asm
+  366  ls
+  367  objdump -d a.out 
+  368  objdump -x a.out 
+  369  ./a.out 
+  370  echo $?
+  371  readelf a.out 
+  372  readelf -a a.out 
+  373  readelf -a a.out  | less
+  374  ls
+  375  objdump -d tiny1.o
+  376  history | grep tiny
+  377  gcc -Wall tiny1.o 
+  378  ls -la a.out 
+  379  ./a.out 
+  380  echo $?
+  381  objdump -d a.out 
+  382  ls
+  383  gcc -Wall -s nostdlib tiny2.o
+  384  history | grep tiny2
+  385  gcc -Wall -a -nostartfiles tiny2.o 
+  386  gcc -Wall -s -nostartfiles tiny2.o 
+  387  ./a.out 
+  388  echo $?
+  389  objdump -d a.out 
+  390  history | grep tiny3
+  391  gcc -Wall -s -nostartfiles tiny3.o 
+  392  ./a.out 
+  393  echo ?
+  394  echo $?
+  395  ./a.out 
+  396  echo $?
+  397  objdump -d a.out 
+  398  ls
+  399  history | grep nasm
+  400  nasm -f elf64 elf64base.asm 
+  401  vi elf64base.asm
+  402  nasm -f bin -o a.out elf64base.asm 
+  403  chmod a+x a.out
+  404  ./a.out 
+  405  echo $?
+  406  objdump -d a.out 
+  407  vi elf64base.asm
+  408  vi tiny3.c
+  409  vi tiny3.s
+  410  gcc -Wall -s -nostartfiles tiny3.o 
+  411  ./a.out 
+  412  echo $?
+  413  wc a.out 
+  414  ndisasm a.out
+  415  man ndisasm
+  416  ndisasm -b 64 a.out 
+  417  ndisasm -b 64 a.out | less
+  418  ndisasm -b 64 -f elf a.out 
+  419  objdump -d a.out 
+  420  man ndisasm
+  421  readelf -a a.out 
+  422  readelf -a a.out | less
+  423  vi tiny3.s
+  424  readelf -a a.out | less
+  425  nasm -f bin -o a.out elf64base.asm 
+  426  bvi a.out 
+  427  ls
+  428  vi ../../jit/a.result
+  429  bvi a.out 
+  430  ndisasm -e 78 a.out 
+  431  ndisasm -e 0x78 a.out 
+  432  ndisasm -b 64 -e 0x78 a.out 
+  433  gcc -Wall -s -nostartfiles tiny3.o 
+  434  objdump -d a.out 
+  435  ls
+  436  vi elf64base.asm
+  437  ls
+  438  history | grep tiny3.s
+  439  history | grep elf64
+  440  ls
+  441  objdump -d a.out
+  442  nasm -f bin -o a.out elf64base.asm 
+  443  chmod a+x a.out
+  444  ./a.out 
+  445  echo $?
+  446  objdump -d a.out 
+  447  ls
+  448  bvi a.out 
+  449  ls
+  450  cd ../../
+  451  ls
+  452  cd translate/
+  453  ls
+  454  wc a.out 
+  455  ndisasm a.out 
+  456  readelf -a a.out 
+  457  readelf -a a.out | less
+  458  Lls
+  459  ls
+  460  readelf -a a.out | less
+  461  ls
+  462  rm a.out asm.s 
+  463  ls
+  464  cd ..
+  465  ls
+  466  cd jit/
+  467  ls
+  468  cd ../ef
+  469  cd ../elf/
+  470  ls
+  471  cd sandbox/
+  472  ls
+  473  vi elf64base.asm
+  474  ls
+  475  vi tiny3.s
+  476  ls
+  477  nasm -f 64 -o a.out tiny3.s 
+  478  history | grep nasm
+  479  nasm -f bin -o a.out tiny3.s 
+  480  vi tiny3.
+  481  vi tiny3.s
+  482  chmod a+x a.out
+  483  ./a.out 
+  484  ls
+  485  vi tiny3.
+  486  vi tiny3.s
+  487  nasm -f bin -o a.out tiny3.s 
+  488  chmod a+x a.out
+  489  ./a.out 
+  490  vi tiny3.s
+  491  nasm -f bin -o a.out tiny3.s 
+  492  chmod a+x a.out
+  493  ./a.out 
+  494  history | grep nasm
+  495  nasm -f elf64 tiny3.s 
+  496  chmod a+x a.out
+  497  ./a.out 
+  498  nasm -f elf64 tiny3.s 
+  499  history | grep gcc
+  500  ls
+  501  gcc -Wall -s -nostartfiles tiny3.o 
+  502  ./a.out 
+  503  echo $?
+  504  wc a.out 
+  505  vi tiny3.s
+  506  nasm -f elf64 tiny3.s 
+  507  gcc -Wall -s -nostartfiles tiny3.o 
+  508  ./a.out 
+  509  echo $?
+  510  wc a.out 
+  511  bvi a.out 
+  512  readelf -a a.out 
+  513  readelf -a a.out | less
+  514  bvi a.out 
+  515  ls
+  516  vi elf64base.asm
+  517  history | grep gcc
+  518  history | grep gcc | less
+  519  ls
+  520  vi tiny3.s
+  521  history | grep Wall
+  522  ls
+  523  gcc -Wall -s -nostartfiles tiny3.o 
+  524  ls
+  525  ./a.out 
+  526  echo $?
+  527  ls -l a.out 
+  528  date
+  529  wc a.out 
+  530  objdump -e 0x72 a.out 
+  531  ndisasm -b 64 -e 0x78 a.out 
+  532  ndisasm -b 64 -e 0x78 a.out | less
+  533  ls
+  534  vi tiny3.s
+  535  gcc -Wall -s -nostartfiles tiny3.s
+  536  nasm -f elf64 tiny3.s 
+  537  ld -s tiny3.o
+  538  ./a.out 
+  539  echo $?
+  540  bvi tiny3.
+  541  bvi a.out 
+  542  objdump -d a.out 
+  543  readelf -a a.out 
+  544  readelf -a a.out | less
+  545  vi tiny3.s
+  546  readelf -a a.out | less
+  547  ls
+  548  vi bss.s
+  549  nasm -f elf64 bss.s 
+  550  ld -s tiny3.o
+  551  ld -s bss.o 
+  552  vi bss.s
+  553  nasm -f elf64 bss.s 
+  554  ld -s bss.o 
+  555  objdump -d a.out 
+  556  wc a.out 
+  557  readelf -a a.out 
+  558  readelf -a a.out | less
+  559  bvi a.out 
+  560  ls
+  561  vi elf64base.asm
+  562  ls
+  563  vi elf64base.asm
+  564  cp elf64base.asm elf64test.asm
+  565  nasm -f bin -o a.out elf64test.asm 
+  566  ls
+  567  ./a.out 
+  568  echo $?
+  569  wc a.out 
+  570  bvi a.out 
+  571  objdump -d a.out 
+  572  ls
+  573  vi elf64base.asm
+  574  ls
+  575  nasm -f bin -o a.out elf64base.asm 
+  576  wc a.out 
+  577  vi elf64base.asm
+  578  ls
+  579  nasm -f bin -o a.out elf64base.asm 
+  580  readelf -a a.out 
+  581  readelf -a a.out | less
+  582  vi elf64base.asm
+  583  readelf -a a.out | less
+  584  vi elf64base.asm
+  585  readelf -a a.out | less
+  586  vi elf64base.asm
+  587  nasm -f bin -o a.out elf64base.asm 
+  588  ./a.out 
+  589  ndisasm a.out 
+  590  objdump -d a.out 
+  591  vi elf64base.asm
+  592  objdump -d a.out 
+  593  ./a.out 
+  594  nasm -f bin -o a.out elf64base.asm 
+  595  ./a.out 
+  596  echo $?
+  597  objdump -d a.out 
+  598  vi elf64base.asm
+  599  ls
+  600  vi tiny3.s
+  601  nasm -f elf64 tiny3.s
+  602  gcc -Wall -s -nostartfiles tiny3.s
+  603  gcc -Wall -s -nostartfiles tiny3.o
+  604  ./a.out 
+  605  od -tx1 a.out 
+  606  ls
+  607  od -tx1 a.out > a.bin
+  608  vi a.bin
+  609  nasm -f bin -o a.out elf64base.asm 
+  610  ./a.out 
+  611  echo $?
+  612  readelf -a a.
+  613  readelf -a a.out 
+  614  readelf -a a.out | less
+  615  nasm -f elf64 tiny3.s
+  616  gcc -Wall -s -nostartfiles tiny3.o
+  617  readelf -a a.out | less
+  618  ls
+  619  vi elf64base.asm
+  620  nasm -f bin elf64base.asm 
+  621  ./a.out 
+  622  nasm -f bin -o a.out elf64base.asm 
+  623  ./a.out 
+  624  vi elf64base.asm
+  625  nasm -f bin -o a.out elf64base.asm 
+  626  ./a.out 
+  627  vi elf64base.asm
+  628  nasm -f bin -o a.out elf64base.asm 
+  629  ./a.out 
+  630  vi elf64base.asm
+  631  bvi a.out 
+  632  ls
+  633  vi elf64base.asm
+  634  readelf -a a.out | less
+  635  ls
+  636  vi elf64base.asm
+  637  pwd
+  638  cd ./../
+  639  ls
+  640  cd ..
+  641  ls
+  642  cd elf/
+  643  ls
+  644  cd ..
+  645  ls
+  646  cd jit/
+  647  ls
+  648  python proto6.py ../bf/hello.bf 
+  649  ls
+  650  bvi jit.out 
+  651  od jit.out 
+  652  history | grep od
+  653  od -j 64 -N 56 -t x1 jit.out 
+  654  od -j 64 x1 jit.out 
+  655  history | grep od
+  656  od -j 64 -t xlz jit.out 
+  657  od -j 64 -t x1z jit.out 
+  658  od -j 64 -t x1z jit.out > jit.result
+  659  vi jit.result
+  660  ls -l
+  661  wc jit.out 
+  662  bvi jit.out 
+  663  ls
+  664  pwd
+  665  cd ../..
+  666  ls
+  667  ls sandbox/
+  668  ls ..
+  669  cat ../memo120909.txt
+  670  ls
+  671  cd binstudy/
+  672  ls
+  673  cd translate/
+  674  ls
+  675  cd ..
+  676  ls
+  677  cd elf/
+  678  ls
+  679  vi memo.txt
+  680  head -10 memo.txt
+  681  head -20 memo.txt
+  682  vi memo.txt
+  683  pwd
+  684  ls
+  685  cd sandbox/
+  686  ls
+  687  cd ../../
+  688  ls
+  689  cd elf/
+  690  ls
+  691  cd sandbox/
+  692  ls
+  693  cd ../../jit/
+  694  ls
+  695  rm jit.result 
+  696  od -j 64 jit.out 
+  697  od -j 64 jit.out -t x1
+  698  od -j 64 jit.out -t x1z
+  699  od -j 64 jit.out -t x1
+  700  od -j 64 jit.out -t x1 | less
+  701  od -j 64 jit.out x1 | less
+  702  ls
+  703  bvi jit.out 
+  704  ls
+  705  vi jit.result
+  706  rm jit.result 
+  707  bvi jit.out 
+  708  ls
+  709  rm help 
+  710  bview jit.out 
+  711  man od
+  712  od -j 64 -t x1
+  713  od -j 64 -t x1 jit.out 
+  714  od -j 64 -t x1 jit.out | less
+  715  od -j 64 -tx1 jit.out | less
+  716  hexdump jit.out 
+  717  hexdump jit.out | less
+  718  man 1 hexdump
+  719  hexdump -C jit.out 
+  720  hexdump -C jit.out | less
+  721  hexdump -c jit.out 
+  722  man 1 hexdump
+  723  hexdump -C jit.out 
+  724  hexdump -C jit.out > jit.result
+  725  vi jit.result
+  726  man 1 hexdump
+  727  od -tx1 jit.out 
+  728  od -tx1 jit.out | less
+  729  od -tx1 jit.out > jit.result
+  730  vi jit.result
+  731  ls
+  732  python proto6.py ../bf/hello.bf 
+  733  expr 16 + 4 + 4
+  734  expr 16 + 2 + 2+4+8+8+8+4+2+2+2+2+2+2
+  735  expr 16 + 2 + 2  + 4 + 8 + 8 + 8 + 4 + 2 + 2 + 2 + 2 + 2 + 2
+  736  python proto6.py ../bf/hello.bf 
+  737  od -tx1 jit.out 
+  738  od -tx1 jit.out > jit.result 
+  739  vi jit.result
+  740  python proto6.py ../bf/hello.bf 
+  741  od -tx1 jit.out > jit.result 
+  742  vi jit.result
+  743  python proto6.py ../bf/hello.bf 
+  744  readelf -All jit.out 
+  745  python proto6.py ../bf/hello.bf 
+  746  od -tx1 jit.out > jit.result 
+  747  vi jit.result
+  748  python proto6.py ../bf/hello.bf 
+  749  chmod
+  750  ls -l
+  751  chmod a+x jit.out
+  752  ./jit.out 
+  753  readelf -a jit.out 
+  754  readelf -a jit.out | less
+  755  wd
+  756  readelf -a jit.out | less
+  757  vi jit.result
+  758  python proto6.py ../bf/hello.bf 
+  759  chmod a+x jit.out
+  760  ./jit.out 
+  761  readelf -a jit.out 
+  762  readelf -a jit.out | less
+  763  python proto6.py ../bf/hello.bf 
+  764  readelf -a jit.out | less
+  765  chmod a+x jit.out
+  766  ./jit.out 
+  767  readelf -a jit.out | less
+  768  ./jit.out 
+  769  echo $?
+  770  readelf -a jit.out | less
+  771  ls
+  772  od -tx1 jit.out > jit.result 
+  773  vi jit.result
+  774  ls
+  775  od -tx1 ./../elf/sandbox/a.out > a.result
+  776  ls
+  777  vi a.result
+  778  ls
+  779  ji jit.result 
+  780  vi jit.result
+  781  ls
+  782  python proto7.py ../bf/hello.bf 
+  783  chmod a+x jit.out
+  784  readelf -a jit.out 
+  785  ./jit.out 
+  786  od -tx1 jit.out > jit.result 
+  787  vi jit.result
+  788  ls
+  789  ./jit.out 
+  790  echo $?
+  791  vi jit.result
+  792  ls
+  793  python proto7.py ../bf/hello.bf 
+  794  chmod a+x jit.out
+  795  ./jit.out 
+  796  echo $?
+  797  readelf -a jit.out 
+  798  bvi jit.out 
+  799  od -tx1 jit.out > jit.result 
+  800  vi jit.result
+  801  readelf -l jit.out 
+  802  python proto7.py ../bf/hello.bf 
+  803  readelf -l jit.out 
+  804  python proto7.py ../bf/hello.bf 
+  805  readelf -l jit.out 
+  806  chmod a+x jit.out
+  807  ./jit.out 
+  808  gdb jit.out
+  809  objdump -d jit.out 
+  810  objdump -x jit.out 
+  811  readelf -a jit.out | less
+  812  ndisasm jit.out 
+  813  ndisasm jit.out | less
+  814  ls
+  815  ndisasm -b 64 -e 0x78 jit.out 
+  816  ndisasm -b 64 -e 0x78 jit.out | less
+  817  cd ../
+  818  ls
+  819  cd bf/
+  820  ls
+  821  vi test.bf
+  822  vi test2.bf
+  823  cd -
+  824  ls
+  825  cd jit/
+  826  python proto7.py ../bf/test2.bf 
+  827  ls
+  828  ndisasm -b 64 -e 0x78 jit.out | less
+  829  vi /usr/include/linux/elf.h
+  830  ls
+  831  cd ../elf/sandbox/
+  832  ls
+  833  vi elf64base.asm
+  834  ls
+  835  readelf -a a.out 
+  836  readelf -a a.out | less
+  837  ls
+  838  readelf -a a.out 
+  839  readelf -a a.out | less
+  840  pwd
+  841  ls
+  842  nasm -f bin -o a.out elf64base.asm 
+  843  ./a.out 
+  844  echo $?
+  845  objdump -d a.out 
+  846  objdump -x a.out 
+  847  readelf -a a.out 
+  848  nasm -f bin -o a.out elf64base.asm 
+  849  readelf -a a.out 
+  850  readelf -a a.out | less
+  851  objdump -d a.out 
+  852  objdump -x a.out 
+  853  bvi a.out 
+  854  nasm -f bin -o a.out elf64base.asm 
+  855  objdump -x a.out 
+  856  objdump -d a.out 
+  857  readelf -a a.out | less
+  858  pwd
+  859  ls
+  860  objdump -s -j .text a.out 
+  861  pwd
+  862  ls
+  863  cd ..
+  864  ls
+  865  cd elf/
+  866  ls
+  867  cat a.ph
+  868  ls
+  869  cd sandbox/
+  870  ls
+  871  python
+  872  tmux -u
+  873  ls
+  874  cd jit/
+  875  ls
+  876  objdump -h a.result 
+  877  objdump -h jit.out 
+  878  cd ../elf/
+  879  ls
+  880  cd sandbox/
+  881  ls
+  882  objdump -h a.out 
+  883  cd ../../
+  884  ls
+  885  mkdir linker
+  886  ls
+  887  cd linker/
+  888  ls
+  889  vi hello.c
+  890  ls
+  891  gcc -Wall -o hello hello.c -v
+  892  ls
+  893  ./hello 
+  894  vi hello.c
+  895  gcc -Wall -o hello hello.c -v
+  896  ./hello 
+  897  size hello
+  898  objdump -h hello
+  899  objdump -h hello | less
+  900  ls
+  901  objdump -h hello
+  902  objdump -p hello
+  903  nm hello
+  904  cd /usr/src
+  905  ls
+  906  which size
+  907  zypper se size
+  908  zypper wp size
+  909  ls
+  910  ls packages/
+  911  rpm -ql size
+  912  which size
+  913  which ize
+  914  which size
+  915  ls
+  916  updatedb
+  917  su -
+  918  pwd
+  919  ls
+  920  nasm xmm.as 
+  921  ls
+  922  ls -l
+  923  nasm xmm.as 
+  924  nasm -h
+  925  nasm -v
+  926  nasm xmm.as 
+  927  nasm sobel.as
+  928  cd ..
+  929  ls
+  930  cd binstudy/
+  931  ls
+  932  cd elf/
+  933  ls
+  934  ls -l
+  935  cd sandbox/
+  936  ls
+  937  ls -l
+  938  disasm a.out 
+  939  ndisasm a.out 
+  940  ndisasm -f 64 a.out 
+  941  history | grep ndisasm
+  942  ndisasm -b 64 a.out 
+  943  history | grep ndisasm
+  944  ndisasm -b 64 -e 0x78 jit.out | less
+  945  ls
+  946  pwd
+  947  ls
+  948  vi /usr/include/linux/elf.h
+  949  ls
+  950  readelf -h a.out 
+  951  ls
+  952  history | grep nasm
+  953  nasm -f bin -o a.out elf64sh.asm
+  954  ./a.out 
+  955  ecoh $?
+  956  echo $?
+  957  ./a.out 
+  958  echo $?
+  959  ndisasm a.out 
+  960  objdump -S a.out 
+  961  objdump -S -M intel a.out 
+  962  nasm -f bin -o a.out elf64sh.asm
+  963  objdump -S -M intel a.out 
+  964  nasm -f bin -o a.out elf64sh.asm
+  965  objdump -S -M intel a.out 
+  966  nasm -f bin -o a.out elf64sh.asm; objdump -S -M intel a.out
+  967  readelf -all a.out 
+  968  nasm -f bin -o a.out elf64sh.asm; objdump -S -M intel a.out
+  969  readelf -all a.out 
+  970  vi /usr/include/linux/elf.h
+  971  nasm -f bin -o a.out elf64sh.asm; objdump -S -M intel a.out
+  972  readelf -h a.out
+  973  readelf -a a.out
+  974  ls
+  975  vi elf64sh.asm
+  976  pwd
+  977  ls
+  978  readelf -all a.out | less
+  979  ls
+  980  objdump -S -M intel a.out 
+  981  ls
+  982  vi elf64sh.asm
+  983  readelf -all a.out | less
+  984  vi elf64sh.asm
+  985  bvi a.out
+  986  ls
+  987  nasm -b 64 -o a.out elf64sh.asm 
+  988  nasm -f 64 -o a.out elf64sh.asm 
+  989  nasm -f bin -o a.out elf64sh.asm 
+  990  readelf -all a.out 
+  991  readelf -all a.out | less
+  992  ls
+  993  ./a.out 
+  994  echo $?
+  995  bvi a.out 
+  996  exit
+  997  ls
+  998  nasm -f bin -o a.out elf64bss.asm 
+  999  ls -al a.out 
+ 1000  ls -lh a.out 
+ 1001  nasm -f bin -o a.out elf64bss.asm 
+ 1002  ls -lh a.out 
+ 1003  ls
+ 1004  cd ../..
+ 1005  ls
+ 1006  vi translate/conv_asm.py
+ 1007  ls
+ 1008  nasm -f bin -o a.out elf64bss.asm 
+ 1009  ls
+ 1010  cd -
+ 1011  ls
+ 1012  nasm -f bin -o a.out elf64bss.asm 
+ 1013  ls -lh a.out 
+ 1014  bvi a.out 
+ 1015  nasm -f bin -o a.out elf64bss.asm 
+ 1016  bvi a.out 
+ 1017  nasm -f bin -o a.out elf64bss.asm 
+ 1018  objdump -S -M intel a.out 
+ 1019  ls
+ 1020  cd ../
+ 1021  ls
+ 1022  rm jit.out 
+ 1023  ls
+ 1024  objdump -S -M intel elf.out 
+ 1025  ./elf.out
+ 1026  chmod a+x elf.out
+ 1027  ./elf.out
+ 1028  readelf -all elf.out 
+ 1029  readelf -all elf.out | less
+ 1030  python
+ 1031  chmod a+x elf.out
+ 1032  chmod a+x elf.out | ./elf.out 
+ 1033  readelf -all elf.out | less
+ 1034  ls
+ 1035  cd sandbox/
+ 1036  ls
+ 1037  history | grep nasm
+ 1038  history | grep nasm | less
+ 1039  nasm -f elf64 bss.s 
+ 1040  cd ..
+ 1041  ls
+ 1042  readelf -all elf.out | less
+ 1043  history | grep nasm
+ 1044  ls
+ 1045  cd sandbox/
+ 1046  ls
+ 1047  nasm -f bin -o a.out elf64bss.asm 
+ 1048  ls
+ 1049  cd ../
+ 1050  ls
+ 1051  ndisasm elf.out 
+ 1052  history | grep ndis elf.out 
+ 1053  history | grep ndis
+ 1054  ndisasm -b 64 -e 0x78 elf.out 
+ 1055  ndisasm -b 64 -e 0x78 elf.out | less
+ 1056  ls
+ 1057  gdb elf.out
+ 1058  ls
+ 1059  vi make_elf.py
+ 1060  dh -h
+ 1061  df -h
+ 1062  ls -lh
+ 1063  ls
+ 1064  vi /usr/include/linux/elf.h
+ 1065  nasm -f bin -o a.out elf64bss.asm 
+ 1066  cd sandbox/
+ 1067  nasm -f bin -o a.out elf64bss.asm 
+ 1068  readelf -all a.out 
+ 1069  readelf -all a.out | less
+ 1070  nasm -f bin -o a.out elf64bss.asm 
+ 1071  objdump -S -M intel a.out
+ 1072  nasm -f bin -o a.out elf64bss.asm 
+ 1073  chmod a+x a.out
+ 1074  ./a.out 
+ 1075  nasm -f bin -o a.out elf64bss.asm 
+ 1076  chmod a+x a.out
+ 1077  ./a.out 
+ 1078  objdump -S -M intel a.out
+ 1079  nasm -f bin -o a.out elf64bss.asm 
+ 1080  chmod a+x a.out
+ 1081  ./a.out 
+ 1082  nasm -f bin -o a.out elf64bss.asm 
+ 1083  chmod a+x a.out
+ 1084  ./a.out 
+ 1085  echo $?
+ 1086  ./a.out 
+ 1087  chmod a+x a.out
+ 1088  nasm -f bin -o a.out elf64bss.asm 
+ 1089  chmod a+x a.out
+ 1090  ./a.out 
+ 1091  ndisasm -b 64 -e 0x78 elf.out | less
+ 1092  ndisasm -b 64 -e 0x78 a.out 
+ 1093  ndisasm -b 64 -e 0x78 a.out | less
+ 1094  ls
+ 1095  nasm -f bin -o a.out elf64bss.asm 
+ 1096  chmod a+x a.out
+ 1097  ./a.out 
+ 1098  nasm -f bin -o a.out elf64bss.asm 
+ 1099  chmod a+x a.out
+ 1100  ./a.out 
+ 1101  ls
+ 1102  nasm -f bin -o a.out elf64bss.asm 
+ 1103  chmod a+x a.out
+ 1104  ./a.out 
+ 1105  nasm -f bin -o a.out elf64bss.asm 
+ 1106  chmod a+x a.out
+ 1107  ./a.out 
+ 1108  echo $?
+ 1109  nasm -f bin -o a.out elf64bss.asm 
+ 1110  chmod a+x a.out
+ 1111  ./a.out 
+ 1112  echo $?
+ 1113  nasm -f bin -o a.out elf64bss.asm 
+ 1114  chmod a+x a.out
+ 1115  ./a.out 
+ 1116  readelf -all a.out | less
+ 1117  nasm -f bin -o a.out elf64bss.asm 
+ 1118  chmod a+x a.out
+ 1119  ./a.out 
+ 1120  nasm -f bin -o a.out elf64bss.asm 
+ 1121  chmod a+x a.out
+ 1122  ./a.out 
+ 1123  gdb a.out
+ 1124  nasm -f bin -o a.out elf64bss.asm 
+ 1125  ./a.out 
+ 1126  echo $?
+ 1127  ls
+ 1128  nasm -f bin -o a.out elf64bss.asm 
+ 1129  ./a.out 
+ 1130  gdb a.out
+ 1131  objdump -S -M intel a.out
+ 1132  readelf -a a.out 
+ 1133  readelf -a a.out | less
+ 1134  nasm -f bin -o a.out elf64bss.asm 
+ 1135  ./a.out 
+ 1136  gdb a.out
+ 1137  bvi a.out 
+ 1138  objdump -S -M intel a.out
+ 1139  gdb a.out
+ 1140  nasm -f bin -o a.out elf64bss.asm 
+ 1141  ./a.out 
+ 1142  echo $?
+ 1143  gdb a.out
+ 1144  readelf -a a.out | less
+ 1145  nasm -f bin -o a.out elf64bss.asm 
+ 1146  readelf -a a.out | less
+ 1147  nasm -f bin -o a.out elf64bss.asm 
+ 1148  readelf -a a.out | less
+ 1149  nasm -f bin -o a.out elf64bss.asm 
+ 1150  readelf -a a.out | less
+ 1151  nasm -f bin -o a.out elf64bss.asm 
+ 1152  readelf -a a.out | less
+ 1153  wc a.out
+ 1154  nasm -f bin -o a.out elf64bss.asm 
+ 1155  readelf -a a.out | less
+ 1156  nasm -f bin -o a.out elf64bss.asm 
+ 1157  readelf -a a.out | less
+ 1158  nasm -f bin -o a.out elf64bss.asm 
+ 1159  readelf -a a.out | less
+ 1160  nasm -f bin -o a.out elf64bss.asm 
+ 1161  readelf -a a.out | less
+ 1162  nasm -f bin -o a.out elf64bss.asm 
+ 1163  readelf -a a.out | less
+ 1164  nasm -f bin -o a.out elf64bss.asm 
+ 1165  readelf -a a.out | less
+ 1166  ./a.out 
+ 1167  nasm -f bin -o a.out elf64bss.asm 
+ 1168  readelf -a a.out | less
+ 1169  ./a.out 
+ 1170  nasm -f bin -o a.out elf64bss.asm 
+ 1171  ./a.out 
+ 1172  nasm -f bin -o a.out elf64bss.asm 
+ 1173  ./a.out 
+ 1174  nasm -f bin -o a.out elf64bss.asm 
+ 1175  ./a.out 
+ 1176  nasm -f bin -o a.out elf64bss.asm 
+ 1177  ./a.out 
+ 1178  objdump -S -M intel a.out
+ 1179  ndisasm -b 64 -e 0x78 a.out | less
+ 1180  gdb a.out
+ 1181  bvi a.out
+ 1182  readelf -a a.out | less
+ 1183  bvi a.out
+ 1184  nasm -f bin -o a.out elf64bss.asm 
+ 1185  bvi a.out
+ 1186  ./a.out 
+ 1187  nasm -f bin -o a.out elf64bss.asm 
+ 1188  ./a.out 
+ 1189  echo $?
+ 1190  readelf -a a.out | less
+ 1191  nasm -f bin -o a.out elf64bss.asm 
+ 1192  ./a.out 
+ 1193  echo $?
+ 1194  nasm -f bin -o a.out elf64bss.asm 
+ 1195  ./a.out 
+ 1196  nasm -f bin -o a.out elf64bss.asm 
+ 1197  ./a.out 
+ 1198  nasm -f bin -o a.out elf64bss.asm 
+ 1199  ./a.out 
+ 1200  nasm -f bin -o a.out elf64bss.asm 
+ 1201  ./a.out 
+ 1202  nasm -f bin -o a.out elf64bss.asm 
+ 1203  ./a.out 
+ 1204  readelf -a a.out | less
+ 1205  gdb a.out
+ 1206  bvi a.out 
+ 1207  readelf -a a.out | less
+ 1208  nasm -f bin -o a.out elf64bss.asm 
+ 1209  readelf -a a.out | less
+ 1210  ./a.out 
+ 1211  echo $?
+ 1212  nasm -f bin -o a.out elf64bss.asm 
+ 1213  ./a.out 
+ 1214  nasm -f bin -o a.out elf64bss.asm 
+ 1215  ./a.out 
+ 1216  echo $?
+ 1217  nasm -f bin -o a.out elf64bss.asm 
+ 1218  ./a.out 
+ 1219  nasm -f bin -o a.out elf64bss.asm 
+ 1220  ./a.out 
+ 1221  nasm -f bin -o a.out elf64bss.asm 
+ 1222  ./a.out 
+ 1223  echo $?
+ 1224  nasm -f bin -o a.out elf64bss.asm 
+ 1225  ./a.out 
+ 1226  nasm -f bin -o a.out elf64bss.asm 
+ 1227  ./a.out 
+ 1228  nasm -f bin -o a.out elf64bss.asm 
+ 1229  ./a.out 
+ 1230  nasm -f bin -o a.out elf64bss.asm 
+ 1231  ./a.out 
+ 1232  nasm -f bin -o a.out elf64bss.asm 
+ 1233  ./a.out 
+ 1234  nasm -f bin -o a.out elf64bss.asm 
+ 1235  ./a.out 
+ 1236  nasm -f bin -o a.out elf64bss.asm 
+ 1237  ./a.out 
+ 1238  gdb a.out
+ 1239  nasm -f bin -o a.out elf64bss.asm 
+ 1240  gdb a.out
+ 1241  nasm -f bin -o a.out elf64bss.asm 
+ 1242  gdb a.out
+ 1243  ./a.out 
+ 1244  echo $?
+ 1245  gdb a.out
+ 1246  objdump -S -M intel a.out
+ 1247  nasm -f bin -o a.out elf64bss.asm 
+ 1248  ./a.out 
+ 1249  objdump -S -M intel a.out
+ 1250  nasm -f bin -o a.out elf64bss.asm 
+ 1251  objdump -S -M intel a.out
+ 1252  ./a.out 
+ 1253  echo $?
+ 1254  ls
+ 1255  cat write.s
+ 1256  gcc write.s 
+ 1257  ls
+ 1258  ./a.out 
+ 1259  nasm -f bin -o a.out elf64bss.asm 
+ 1260  ./a.out 
+ 1261  ls
+ 1262  vi write.s
+ 1263  cat write.s
+ 1264  nasm -f bin -o a.out elf64bss.asm 
+ 1265  ./a.out 
+ 1266  nasm -f bin -o a.out elf64bss.asm 
+ 1267  ./a.out 
+ 1268  nasm -f bin -o a.out elf64bss.asm 
+ 1269  ./a.out 
+ 1270  ls
+ 1271  vi /usr/include/linux/elf.h
+ 1272  ls
+ 1273  nasm -f bin -o a.out elf64bss.asm 
+ 1274  ./a.out 
+ 1275  readelf -all a.out | less
+ 1276  nasm -f bin -o a.out elf64bss.asm 
+ 1277  readelf -all a.out | less
+ 1278  ./a.out 
+ 1279  ls -lh a.out 
+ 1280  readelf -all a.out | less
+ 1281  ls
+ 1282  nasm -f bin -o a.out elf64bss2.asm 
+ 1283  nasm -f bin -o a.out elf64bss.asm 
+ 1284  echo $?
+ 1285  nasm -f bin -o a.out elf64bss.asm 
+ 1286  echo $?
+ 1287  nasm -f bin -o a.out elf64bss.asm 
+ 1288  readelf -all a.out 
+ 1289  nasm -f bin -o a.out elf64bss.asm 
+ 1290  ./a.out
+ 1291  chmod a+x a.out
+ 1292  ./a.out
+ 1293  objdump -d a.out 
+ 1294  nasm -f bin -o a.out elf64bss.asm 
+ 1295  chmod a+x a.out
+ 1296  ./a.out
+ 1297  echo $?
+ 1298  nasm -f bin -o a.out elf64bss.asm 
+ 1299  chmod a+x a.out
+ 1300  ./a.out
+ 1301  gdb a.out
+ 1302  ls
+ 1303  ./a.out 
+ 1304  ls -la
+ 1305  file core
+ 1306  ls -la
+ 1307  ls *core
+ 1308  readelf a.out
+ 1309  readelf -all a.out
+ 1310  readelf -all a.out|less
+ 1311  objdump -x a.out|less
+ 1312  objdump -d a.out
+ 1313  objdump -d a.out -M intel
+ 1314  ls
+ 1315  vi bss2.c
+ 1316  vi write.s
+ 1317  vi bss2.c
+ 1318  gcc -nostdlib bss2.c
+ 1319  strip a.out
+ 1320  objdump -d a.out
+ 1321  objdump -x a.out
+ 1322  objdump -x a.out|less
+ 1323  readelf -all a.out|less
+ 1324  ls
+ 1325  history > history-memo

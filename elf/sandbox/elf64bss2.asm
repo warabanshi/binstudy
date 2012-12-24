@@ -16,7 +16,7 @@ ehdr:                                   ; ELF64_Ehdr(ELF header)
             dw  phdrsize                ; u16 e_phentisize
             dw  1                       ; u16 e_phnum
             dw  0x40                    ; u16 e_shentsize
-            dw  3                       ; u16 e_shnum
+            dw  4                       ; u16 e_shnum
             dw  1                       ; u16 e_shstrndx
 
 ehdrsize    equ     $ - ehdr
@@ -28,12 +28,21 @@ phdr:                                   ; ELF64_Phdr(program header)
             dq  $$                      ; u64 p_vaddr
             dq  $$                      ; u64 p_paddr
             dq  filesize                ; u64 p_filesz
-            dq  filesize + 5              ; u64 p_memsz
+            dq  filesize                ; u64 p_memsz
             dq  0x1000                  ; u64 p_align
 
 phdrsize    equ     $ - phdr
 
 _start:
+            mov     rbx, 0x080481ba
+            mov     byte ptr [rbx], 0x48
+            mov     rax, 1
+            mov     edx, 1
+            mov     rsi, 0x08048001     ; 2nd argument have to pointer to string
+                                        ; use E of magic number 'ELF'
+            mov     edi, 1
+            syscall
+
             mov     eax, 60
             mov     edi, 42
             syscall
@@ -44,8 +53,8 @@ _text:
             db  ".text", 0      ; string must end with null byte
 _shstrtbl:
             db  ".shstrtbl", 0  ; string must end with null byte
-;_bss:
-;            db  ".bss", 0
+_bss:
+            db  ".bss", 0
 
 ; declarations are specified in /usr/include/linux/elf.h
 shdr:
@@ -89,16 +98,16 @@ shdr:
             dq  4                   ; u64 sh_addralign
             dq  0                   ; u64 sh_entsize
 
-;            ; section header for bss division
-;            dd  _bss - shstrtbl     ; u32 sh_name       section name index
-;            dd  8                   ; u32 sh_type       8 means SHT_NOBITS
-;            dq  3                   ; u64 sh_flags      3 = SHF_WRITE & SHF_ALLOC
-;            dq  $$ + filesize       ; u64 sh_addr       tentative
-;            dq  filesize            ; u64 sh_offset     tentative
-;            dq  30000               ; u64 sh_size
-;            dd  0                   ; u32 sh_link
-;            dd  0                   ; u32 sh_info
-;            dq  16                  ; u64 sh_addralign  tentative
-;            dq  0                   ; u64 sh_entsize
+            ; section header for bss division
+            dd  _bss - shstrtbl     ; u32 sh_name       section name index
+            dd  8                   ; u32 sh_type       8 means SHT_NOBITS
+            dq  3                   ; u64 sh_flags      3 = SHF_WRITE & SHF_ALLOC
+            dq  $$ + filesize       ; u64 sh_addr       tentative
+            dq  filesize            ; u64 sh_offset     tentative
+            dq  30000               ; u64 sh_size
+            dd  0                   ; u32 sh_link
+            dd  0                   ; u32 sh_info
+            dq  16                  ; u64 sh_addralign  tentative
+            dq  0                   ; u64 sh_entsize
 
 filesize    equ     $ - $$
