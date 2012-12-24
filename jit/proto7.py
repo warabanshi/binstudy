@@ -1,11 +1,7 @@
 '''
-JIT sample 3
+JIT sample 7
 
----- memo ----
-if you call a system call instead of libc functions for putchar and etc,
-then you have no need to implant the address of its address.
-
-this version use system call
+this version make ELF format
 '''
 
 import sys, struct
@@ -34,9 +30,10 @@ def conv32(dw):
 def conv64(qw):
     return map(ord, struct.pack("<q" if qw < 0 else "<Q", qw))
 
-def makeELF(bf, addr = None):
+def makeELF(bf):
 
-    addr = 0x00 if addr == None else addr
+    #addr = 0x08048000 if addr == None else addr
+    addr = 0x08048000
 
     # ELF header
     e = []
@@ -52,9 +49,9 @@ def makeELF(bf, addr = None):
     e.extend([0x00, 0x00])                  # u16 e_ehsize
     e.extend([0x00, 0x00])                  # u16 e_phentisize
     e.extend([0x01, 0x00])                  # u16 e_phnum
-    e.extend([0x00, 0x00])                  # u16 e_shentsize
-    e.extend([0x00, 0x00])                  # u16 e_shnum
-    e.extend([0x00, 0x00])                  # u16 e_shstrndx
+    e.extend([0x40, 0x00])                  # u16 e_shentsize
+    e.extend([0x03, 0x00])                  # u16 e_shnum
+    e.extend([0x01, 0x00])                  # u16 e_shstrndx
 
     # program header
     p = []
@@ -65,20 +62,87 @@ def makeELF(bf, addr = None):
     p.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_paddr
     p.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_filesz
     p.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_memsz
-    p.extend([0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_align
+    p.extend([0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # u64 p_align
+
+    # section string table
+    t = []
+    t.extend([0x00])                                    # shstrtbl
+    t.extend([0x2e, 0x74, 0x65, 0x78, 0x74, 0x00])      # ".text"
+    t.extend([0x2e, 0x73, 0x68, 0x73, 0x74, 0x72, 0x74, 0x62, 0x6c, 0x00])
+                                                        # ".shstrtbl"
+
+    # section header
+    s = []
+    # first section header
+    s.extend([0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+
+    # second section header
+    second_shpos = len(s)
+    s.extend([0x00, 0x00, 0x00, 0x00])                          # sh_name
+    s.extend([0x03, 0x00, 0x00, 0x00])                          # sh_type
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_flags
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_addr
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_offset
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_size
+    s.extend([0x00, 0x00, 0x00, 0x00])                          # sh_link
+    s.extend([0x00, 0x00, 0x00, 0x00])                          # sh_info
+    s.extend([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_addralign
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_entsize
+
+    # third section header
+    third_shpos = len(s)
+    s.extend([0x00, 0x00, 0x00, 0x00])                          # sh_name
+    s.extend([0x01, 0x00, 0x00, 0x00])                          # sh_type
+    s.extend([0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_flags
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_addr
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_offset
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_size
+    s.extend([0x00, 0x00, 0x00, 0x00])                          # sh_link
+    s.extend([0x00, 0x00, 0x00, 0x00])                          # sh_info
+    s.extend([0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_addralign
+    s.extend([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])  # sh_entsize
 
     e[24:32] = conv64(addr + len(e) + len(p))   # set e_entry
     e[32:40] = conv64(len(e))                   # set e_phoff
+    e[40:48] = conv64(len(e + p + bf + t))      # set e_shoff
     e[52:54] = conv16(len(e))                   # set e_ehsize
     e[54:56] = conv16(len(p))                   # set e_phentisize
 
-    p[16:24] = conv64(addr + len(e))                # set p_vaddr
-    p[24:32] = conv64(addr + len(e))                # set p_paddr
-    p[32:40] = conv64(len(e) + len(p) + len(bf))    # set p_filesz
-    p[40:48] = conv64(len(e) + len(p) + len(bf))    # set p_memsz
+    #p[16:24] = conv64(addr + len(e))                # set p_vaddr
+    #p[24:32] = conv64(addr + len(e))                # set p_paddr
+    p[16:24] = conv64(addr)                # set p_vaddr
+    p[24:32] = conv64(addr)                # set p_paddr
+    p[32:40] = conv64(len(e + p + bf + t + s))      # set p_filesz
+    p[40:48] = conv64(len(e + p + bf + t + s))      # set p_memsz
     #p[48:56] = conv64(addr + len(e))                # set p_align
 
-    return e + p + bf
+    s[64:68] = conv32(7)                # set sh_name
+    s[88:96] = conv64(len(e+p+bf))      # set sh_offset
+    s[96:104] = conv64(len(t))          # set sh_size
+
+    s[128:132] = conv32(1)              # set sh_name
+    s[144:152] = conv64(addr + len(e) + len(p))     # set sh_addr
+    s[152:160] = conv64(len(e+p))       # set sh_offset
+    s[160:168] = conv64(len(bf))        # set sh_size
+
+    return e + p + bf + t + s
+
+# dummy
+#def translate(source, r):
+#    r.extend([0xb8, 0x3c, 0x00, 0x00, 0x00])
+#    r.extend([0xbf, 0x2a, 0x00, 0x00, 0x00])
+#    r.extend([0x0f, 0x05])
+#
+#    return r
 
 def translate(source, r):
     spos        = 0
@@ -168,7 +232,7 @@ def translate(source, r):
     #r.extend([0xc3])
     return r
 
-bf_mem = (c_ubyte * 30000)()
+#bf_mem = (c_ubyte * 30000)()
 
 f = open(sys.argv[1])
 source = f.read()
@@ -187,11 +251,12 @@ p = mmap(
     -1, 0
 )[0]
 
-getaddr = CFUNCTYPE(c_void_p, c_void_p)(lambda p: p)
-f       = CFUNCTYPE(c_void_p)(getaddr(p))
+#getaddr = CFUNCTYPE(c_void_p, c_void_p)(lambda p: p)
+#f       = CFUNCTYPE(c_void_p)(getaddr(p))
 
-bf_code[3:11]   = conv64(getaddr(bf_mem))
-elf = makeELF(bf_code, getaddr(p))
+#bf_code[3:11]   = conv64(getaddr(bf_mem))
+###elf = makeELF(bf_code, getaddr(p))
+elf = makeELF(bf_code)
 
 # for debug
 #print map(hex, bf_code)
