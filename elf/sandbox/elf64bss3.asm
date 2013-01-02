@@ -43,11 +43,13 @@ phdrsize    equ     $ - phdr
             dq  0x200000                ; u64 p_align
 
 _start:
-            ;mov     rbx, 0x080481ba
-            ;mov     byte ptr [rbx], 0x48
+            mov     rbx, 0x08248000
+            mov     qword [rbx], 0x48
+
             mov     rax, 1
             mov     edx, 1
-            mov     rsi, 0x08048001     ; 2nd argument have to pointer to string
+            ;mov     rsi, 0x08048001     ; 2nd argument have to pointer to string
+            mov     rsi, rbx             ; 2nd argument have to pointer to string
                                         ; use E of magic number 'ELF'
             mov     edi, 1
             syscall
