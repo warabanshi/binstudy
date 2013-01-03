@@ -158,4 +158,4 @@ then the memory over the size of file areas are considered .bss area
 
 by Linker & Loader P.69
 
-
+-> it is incorrect

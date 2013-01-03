@@ -1,0 +1,3 @@
+Q1. why main code in elf/sandbox/tiny2.s is started from "_start;" ?
+Q2. what is the detail meaning of align in ELF program-header like p_align ?
+Q3. why ELF sample specified "org 0x08048000" instruction ?

@@ -6,5 +6,5 @@ SECTION .bss
 
 SECTION .text
 _start:
-    lea     rbx, mem
-    ret
+#    lea     rbx, mem
+#    ret
