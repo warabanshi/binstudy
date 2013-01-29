@@ -58,6 +58,7 @@ class ElfAnalyzer:
     def getQw(self, key = None):
         return self.fetch(8, key)
 
+
 ana = ElfAnalyzer(binList)
 print('Magic            : %s' % ana.getMagic())
 print('Type             : %s' % ana.getWord())
@@ -80,19 +81,18 @@ for i in range(ana.getKeyEntry('phnum')):
     print('segment type     : %s' % ana.getDw())
     print('permission flag  : %s' % ana.getDw())
     print('offset           : %s' % ana.getQw())
-    print('virutal addr     : %s' % ana.getQw())
+    print('virtual addr     : %s' % ana.getQw())
     print('physical addr    : %s' % ana.getQw())
     print('filesize         : %s' % ana.getQw())
     print('memory size      : %s' % ana.getQw())
     print('align            : %s' % ana.getQw())
-
 
 shoff = ana.getKeyEntry('sh-offset') 
 shsize = ana.getKeyEntry('shsize')
 
 print("\n ------------- string section ------------- \n")
 strIndex = ana.getKeyEntry('str-section-index')
-ana.setPos(shoff + (shsize * strIndex) + 24)
+ana.setPos(shoff + (shsize * strIndex) + 24) # skip to offset parameter
 
 offset = ana.getQw()
 size = ana.getQw()
@@ -120,3 +120,5 @@ for i in range(1, ana.getKeyEntry('shnum')):
     print('address align        : %s' % ana.getQw())
     print('entry table size     : %s' % ana.getQw())
     print("")
+
+
