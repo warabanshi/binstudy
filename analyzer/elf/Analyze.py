@@ -21,6 +21,8 @@ class Analyze:
         self.setPh()    #set program header
         self.setSh()    #set section header
 
+        self.setSectionName()
+
     # argument list expected in little endien
     def convBin(self, l):
         b = 0
@@ -113,6 +115,17 @@ class Analyze:
             s.set('entry_table_size',   self.getQw())
 
             self.shList.append(s)
+
+    def setSectionName(self):
+        nameSection = self.getSh(self.getKeyEntry('strsec_idx'))
+        offset = nameSection.get('offset')
+        size = nameSection.get('size')
+
+        sectionStr = ''.join(map(chr, self.getRange(offset, size)))
+        for sh in self.shList:
+            index = sh.get('name_index')
+            s = sectionStr[index:]
+            sh.setName(s[:s.find("\0")])
 
     def getEh(self):
         return self.elfHeader

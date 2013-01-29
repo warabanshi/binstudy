@@ -2,8 +2,11 @@ from Header import Header
 
 class SectionHeader(Header):
 
+    def setName(self, name):
+        self.name = name
+
     def echo(self):
-        print('============= Section Header ==========')
+        print('====== Section Header(%s) ======' % self.name)
         print('name_index:      %s' % self.get('name_index'))
         print('type:            %s' % self.get('type'))
         print('flag:            %s' % self.get('flag'))
