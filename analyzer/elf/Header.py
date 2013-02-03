@@ -12,4 +12,3 @@ class Header(object):
 
     def echo(self):
         None
-

@@ -12,6 +12,7 @@ class Analyze:
     elfHeader = None
     shList = []       # section header list
     phList = []       # program header list
+    snTab  = {}       # section name table
 
     def __init__(self, filename):
         f = open(filename)
@@ -22,6 +23,7 @@ class Analyze:
         self.setSh()    #set section header
 
         self.setSectionName()
+        self.setSectionBody()
 
     # argument list expected in little endien
     def convBin(self, l):
@@ -122,10 +124,25 @@ class Analyze:
         size = nameSection.get('size')
 
         sectionStr = ''.join(map(chr, self.getRange(offset, size)))
-        for sh in self.shList:
+        for (n, sh) in enumerate(self.shList):
             index = sh.get('name_index')
             s = sectionStr[index:]
-            sh.setName(s[:s.find("\0")])
+            name = s[:s.find("\0")]
+            sh.setName(name)
+            self.snTab[name] = n
+
+    def setSectionBody(self):
+        for sh in self.shList:
+            offset  = sh.get('offset')
+            size    = sh.get('size')
+            # if you try to get .bss division it will occur the error
+            # since .bss division has no physical area size until execute
+            sh.setBody(self.getRange(offset, size))
+
+    def echoSn(self):
+        print('-- section names ----------')
+        for (sn, order) in sorted(self.snTab.items(), key=lambda x:x[1]):
+            print('%3d : %20s' % (order, sn))
 
     def getEh(self):
         return self.elfHeader
@@ -134,5 +151,8 @@ class Analyze:
         return self.phList[key]
 
     def getSh(self, key):
-        return self.shList[key]
+        if isinstance(key, basestring):
+            return self.shList[self.snTab[key]]
+        else:
+            return self.shList[key]
 
