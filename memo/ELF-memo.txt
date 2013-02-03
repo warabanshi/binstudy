@@ -1,0 +1,77 @@
+ELF sectionメモ
+
+--- test.outの中身について ---
+
+.interp
+プログラムインタプリタのパスを示す。
+中身の値は
+python> ''.join(map(chr, obj.getSh('.interp').getBody()))
+/lib64/ld-linux-x86-64.so.2
+
+.note.gnu.build-id
+セクションにはビルドされたファイルに対するユニークな識別子 (ID) が入っています。そのIDは、同一のビルドツリーで複数回ビルドしても同じままです。デフォルトアルゴリズムのSHA1はビルドID文字列として、160ビット（40個の16進文字）を生成します。同一の値を持つ同じセクションは、シンボルを持つ元々のビルドバイナリ、ストリップされたバイナリ、そして分離デバッグ情報ファイルの中に存在します。
+referenced by http://www.geocities.jp/harddiskdive/gdb/gdb_178.html
+ldの実行時に--build-id=styleという形で指定出来るらしい
+結局何かというと、デバッグ用として入れられる値なので、無くても問題はない。
+referenced by http://www.glamenv-septzen.net/view/551
+struct .note.gnu.build-id { 
+    DW :
+    DW : data size
+    DW : 
+    DW : owner(=GNU)
+    byte[20]: build-id
+}
+
+.hash .gnu.hash
+シンボルを見つける際に、線形検索するよりも効率よくするための値。
+なので、別にこれを使わなければならないわけではないから、無くても可能。
+referenced by http://stackoverflow.com/questions/12135503/linux-elf-32-bits-loading
+
+.dynsym
+すべてのshared libraryの必要なライブラリリストは.dynamicセクションにある。
+.dynsymは動的セクションのシンボルテーブルを持つ
+
+.dynstr
+動的リンクに必要な文字列の保持。
+python> (''.join(map(chr, obj.getSh('.dynstr').getBody()))).split("\x00")
+['', 'libc.so.6', 'exit', 'putchar', 'GLIBC_2.2.5', '']
+
+.gnu.version
+wordサイズの値の配列。
+link sectionが5なので、dynsymセクションと関連を持ってる
+python> obj.getSh('.gnu.version').getBody()
+[0, 0, 2, 0, 2, 0]
+
+.gnu.version_r
+ELF64_verneed構造体の値。(/usr/include/elf.hより)
+
+.rela.plt
+
+.plt
+procedure linkage table
+PIC実現のために、GOTと合わせて使用されるテーブル。
+リンカ・ローダ実践開発テクニック P.260
+
+.text
+プログラムのコード部分
+
+.eh_frame_hdr
+.eh_frameセクションへの追加情報
+http://refspecs.linuxbase.org/LSB_1.3.0/gLSB/gLSB/ehframehdr.html
+
+.eh_frame
+exception frame
+http://refspecs.linuxfoundation.org/LSB_3.0.0/LSB-Core-generic/LSB-Core-generic/ehframechpt.html
+デバッグ用かな？
+
+.dynamic
+/usr/include/elf.hにて定義されているElf64_Dyn構造体が
+複数入っている。
+16バイトで一組になるが、後半8バイトは共用体になっており、
+値であったりアドレスであったり、いずれかの役割を担う。
+
+.got.plt
+global offset table
+
+.shstrtab
+セクションヘッダーの名称テーブル
