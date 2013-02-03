@@ -1,7 +1,7 @@
 import sys, struct
-from elf.ElfHeader import ElfHeader
-from elf.ProgramHeader import ProgramHeader
-from elf.SectionHeader import SectionHeader
+from elf.header.ElfHeader import ElfHeader
+from elf.header.ProgramHeader import ProgramHeader
+from elf.header.SectionHeader import SectionHeader
 
 class Analyze:
 
