@@ -5,6 +5,9 @@ class SectionHeader(Header):
     def setName(self, name):
         self.name = name
 
+    def getName(self):
+        return self.name
+
     def setBody(self, body):
         self.body = body
 

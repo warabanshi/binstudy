@@ -1,6 +1,5 @@
 class Header(object):
 
-
     def __init__(self):
         self.contents = {}
 
