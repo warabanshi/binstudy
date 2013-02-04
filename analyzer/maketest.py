@@ -1,5 +1,5 @@
-from elf.Analyze import Analyze
-from elf.WriteElf import WriteElf
+#from elf.Analyze import Analyze
+#from elf.WriteElf import WriteElf
 from elf.ReadElf import ReadElf
 
 #obj = Analyze('test.out')
@@ -12,3 +12,4 @@ from elf.ReadElf import ReadElf
 #w.make()
 
 re = ReadElf('test.out')
+re.getPhCtrl().getPh(3).echo()
