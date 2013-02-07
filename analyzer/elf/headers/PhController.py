@@ -2,13 +2,12 @@ from Ph import Ph
 
 class PhController:
 
-    def __init__(self, binList, eh, shCtrl):
+    def __init__(self, binList, eh):
         self.eh     = eh
         self.phList = []
         self.binList = binList
 
         self.aggregate(eh)
-        self.setShNames(shCtrl)
 
     def aggregate(self, eh):
         phSize = eh.get('ph_size')
@@ -21,12 +20,18 @@ class PhController:
 
             self.phList.append(ph)
 
-    def setShNames(self, shCtrl):
+    def setShNames(self, shList):
         for ph in self.phList:
-            ph.setShNames(shCtrl)
+            ph.setShNames(shList)
 
     def getPhList(self):
         return self.phList
 
     def getPh(self, key):
         return self.phList[key]
+
+    def removePh(self, key):
+        del self.phList[key]
+
+    def getTotalSize(self):
+        return self.eh.get('ph_size') * len(self.phList)

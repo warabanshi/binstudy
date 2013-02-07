@@ -14,9 +14,9 @@ class Ph(Header):
         self.set('memory_size',        self.getQw())
         self.set('align',              self.getQw())
 
-    def setShNames(self, shCtrl):
+    def setShNames(self, shList):
         self.shNameList = []
-        for sh in shCtrl.getShList():
+        for sh in shList():
             if self.isIncludeSh(sh.get('address')):
                 self.shNameList.append(sh.getName())
 
