@@ -2,7 +2,10 @@ from Header import Header
 
 class ElfHeader(Header):
 
-    def retrieve(self):
+    def retrieve(self, binList, offset = 0):
+        self.setPos(offset)
+        self.setBinList(binList)
+
         self.set('magic',      self.getMagic())
         self.set('type',       self.getWord())
         self.set('machine',    self.getWord())
@@ -17,6 +20,8 @@ class ElfHeader(Header):
         self.set('sh_size',    self.getWord('sh_size'))
         self.set('sh_num',     self.getWord('sh_num'))
         self.set('shstrndx',   self.getWord('shstrndx'))
+
+        self.clearBinList()
 
     def getMagic(self, isFetch = True):
         if isFetch:

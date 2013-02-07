@@ -1,10 +1,10 @@
 class Header(object):
 
-    def __init__(self, binList):
+    def __init__(self):
         self.contents = {}
         self.keyEntry = {}
         self.pos = 0
-        self.binList = binList
+        self.binList = []
 
     def set(self, key, val):
         self.contents[key] = val
@@ -14,6 +14,12 @@ class Header(object):
 
     def setPos(self, pos):
         self.pos = pos
+
+    def setBinList(self, binList):
+        self.binList = binList
+
+    def clearBinList(self):
+        self.binList = []
 
     # argument list expected in little endien
     def convBin(self, l):
@@ -44,8 +50,8 @@ class Header(object):
     def getQw(self, key = None):
         return self.fetch(8, key)
 
-    def getRange(self, start, size):
-        return self.binList[start:start+size]
+    #def getRange(self, start, size):
+    #    return self.binList[start:start+size]
 
     def retrieve(self):
         raise('method retrieve() has to implement individualy')
