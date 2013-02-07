@@ -2,6 +2,10 @@ from Header import Header
 
 class Ph(Header):
 
+    def __init__(self, binList):
+        Header.__init__(self, binList)
+        self.includeShList = []
+
     def retrieve(self, offset):
         self.setPos(offset)
 
@@ -16,16 +20,24 @@ class Ph(Header):
 
     def setShNames(self, shList):
         self.shNameList = []
-        for sh in shList():
+        for sh in shList:
             if self.isIncludeSh(sh.get('address')):
                 self.shNameList.append(sh.getName())
+
+    def getShNames(self):
+        return self.shNameList
 
     def isIncludeSh(self, sStart):
         pStart = self.get('physical_addr')
         pSize = self.get('memory_size')
 
         return (pStart <= sStart and sStart < pStart + pSize)
+    
+    def setSh(self, sh):
+        self.includeShList.append(sh)
 
+    def restructure(self, offset):
+        None
 
     # for debug method
     def echo(self):
@@ -42,3 +54,4 @@ class Ph(Header):
         print('')
         print('%%% including section headers %%%')
         print(' '.join(self.shNameList))
+        print('')

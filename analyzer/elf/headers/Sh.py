@@ -28,6 +28,9 @@ class Sh(Header):
     def getBody(self):
         return self.body
 
+    def restructure(self):
+        self.set('size', len(self.body))
+
     # method for debug
     def echo(self):
         lm = lambda n: (n, hex(n))

@@ -62,6 +62,8 @@ class WriteElf:
         return eh
 
     def makePh(self):
+        self.phCtrl.restructure(self.shCtrl)
+
         p = []
         for ph in self.phCtrl.getPhList():
             p += self.convLE(ph.get('segment_type'),    4)
