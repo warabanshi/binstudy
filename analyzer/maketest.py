@@ -5,5 +5,5 @@ re = ReadElf('test.out')
 eh, phCtrl, shCtrl = re.getResult()
 
 
-#we = WriteElf(phCtrl, shCtrl)
-#we.make()
+we = WriteElf(phCtrl, shCtrl)
+we.make()

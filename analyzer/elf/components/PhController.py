@@ -4,32 +4,15 @@ class PhController(object):
         self.programList = []
 
     def append(self, p):
-        self.programList.appned(p)
+        self.programList.append(p)
 
     def getProgramList(self):
         return self.programList
 
-#    def aggregate(self, eh):
-#        phSize = eh.get('ph_size')
-#        phOff  = eh.get('ph_offset')
-#        phNum  = eh.get('ph_num')
-#
-#        for i in range(phNum):
-#            ph = Ph(self.binList)
-#            ph.retrieve(phOff + phSize * i)
-#
-#            self.phList.append(ph)
-#
-#    def setShNames(self, shList):
-#        for ph in self.phList:
-#            ph.setShNames(shList)
-#
-#    def getPhList(self):
-#        return self.phList
-#
-#    def getPh(self, key):
-#        return self.phList[key]
-#
+    def setSection(self, sectionList):
+        for p in self.programList:
+            p.setSection(sectionList)
+
 #    def removePh(self, key):
 #        del self.phList[key]
 #

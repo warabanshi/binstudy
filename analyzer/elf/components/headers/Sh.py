@@ -18,3 +18,5 @@ class Sh(Header):
         self.set('entry_table_size',   self.getQw())
 
         self.clearBinList()
+
+        return self

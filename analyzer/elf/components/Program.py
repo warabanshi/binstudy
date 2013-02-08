@@ -1,31 +1,37 @@
 class Program(object):
 
-    def __init__(self, ph, shList = []):
-        self.ph = ph
+    def __init__(self, ph, sList = []):
+        self.ph     = ph
+        self.sList  = []
 
-        if (len(shList) > 0):
-            setSectionName(shList)
+        if (len(sList) > 0):
+            self.setSection(sList)
+            self.setSectionName(sList)
 
-
-    def setSectionName(self, shList):
-        None
-
-    def setShNames(self, shList):
-        self.shNameList = []
-        for sh in shList:
+    def setSection(self, sList):
+        for s in sList:
+            sh = s.getSh()
             if self.isIncludeSh(sh.get('address')):
-                self.shNameList.append(sh.getName())
+                self.sList.append(s)
 
-    def getShNames(self):
-        return self.shNameList
+    def setSectionName(self, sList):
+        self.sNameList = []
+
+        for s in sList:
+            sh = s.getSh()
+            if self.isIncludeSh(sh.get('address')):
+                self.sNameList.append(s.getName())
+
+    def getSectionNameList(self):
+        return self.sNameList
 
     def isIncludeSh(self, sStart):
-        pStart = self.get('physical_addr')
-        pSize = self.get('memory_size')
+        pStart = self.ph.get('physical_addr')
+        pSize = self.ph.get('memory_size')
 
         return (pStart <= sStart and sStart < pStart + pSize)
 
-    # for debug method
+    # method for debug
     def echo(self):
         print('********* Program Header ***********')
         print('segment_type:    %s' % self.ph.get('segment_type'))
@@ -37,8 +43,7 @@ class Program(object):
         print('memory_size:     %s' % self.ph.get('memory_size'))
         print('align:           %s' % self.ph.get('align'))
 
-        # implement later
-        #print('')
-        #print('%%% including section headers %%%')
-        #print(' '.join(self.shNameList))
-        #print('')
+        print('')
+        print('%%% including section headers %%%')
+        print(' '.join(self.sNameList))
+        print('')

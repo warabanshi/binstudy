@@ -16,3 +16,5 @@ class Ph(Header):
         self.set('align',              self.getQw())
 
         self.clearBinList()
+
+        return self

@@ -1,3 +1,4 @@
+from elf.Utils import *
 class Header(object):
 
     def __init__(self):
@@ -21,17 +22,9 @@ class Header(object):
     def clearBinList(self):
         self.binList = []
 
-    # argument list expected in little endien
-    def convBin(self, l):
-        b = 0
-        for byte in reversed(l):
-            b = (b << 8) | byte
-
-        return b
-
     # bs: bytesize
     def fetch(self, bs, key = None):
-        r = self.convBin(self.binList[self.pos:self.pos+bs])
+        r = convBin(self.binList[self.pos:self.pos+bs])
         self.pos += bs
         if key != None:
             self.keyEntry[key] = r
