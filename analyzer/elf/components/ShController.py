@@ -45,7 +45,7 @@ class ShController(object):
         shStrList = shStr.split("\0")
 
         shList = []
-        shList += convLE(shStrList.index('.shstrtab'), 4)           # name_index (sat later)
+        shList += convLE(shStrList.index('.shstrtab'), 4)           # name_index
         shList += convLE(3, 4)                                      # type
         shList += [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]  # flag
         shList += [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]  # address
@@ -67,7 +67,8 @@ class ShController(object):
             idx = sum([len(name+"\0") for name in shStrList[:shStrList.index(sName)]])
             s.getSh().set('name_index', idx)
 
-            print('index = %3d, name = %s' % (idx, sName))
+            # for debug
+            #print('index = %3d, name = %s' % (idx, sName))
 
 #    def removeSh(self, key):
 #        if isinstance(key, basestring):

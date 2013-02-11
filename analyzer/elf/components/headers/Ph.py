@@ -1,4 +1,5 @@
 from Header import Header
+from elf.Utils import *
 
 class Ph(Header):
 
@@ -18,3 +19,16 @@ class Ph(Header):
         self.clearBinList()
 
         return self
+
+    def output(self):
+        r = []
+        r += convLE(self.get('segment_type'),       4)
+        r += convLE(self.get('permission_flag'),    4)
+        r += convLE(self.get('offset'),             8)
+        r += convLE(self.get('virtual_addr'),       8)
+        r += convLE(self.get('physical_addr'),      8)
+        r += convLE(self.get('filesize'),           8)
+        r += convLE(self.get('memory_size'),        8)
+        r += convLE(self.get('align'),              8)
+
+        return r

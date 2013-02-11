@@ -1,6 +1,12 @@
 from Header import Header
+from elf.Utils import *
 
 class ElfHeader(Header):
+
+    org = 0x400000
+
+    def getOrg(self):
+        return self.org
 
     def retrieve(self, binList, offset = 0):
         self.setPos(offset)
@@ -29,3 +35,21 @@ class ElfHeader(Header):
       
         return self.binList[0:16]
 
+    def output(self):
+        r = []
+        r += self.get('magic')
+        r += convLE(self.get('type'),       2)
+        r += convLE(self.get('machine'),    2)
+        r += convLE(self.get('version'),    4)
+        r += convLE(self.get('entry_addr'), 8)
+        r += convLE(self.get('ph_offset'),  8)
+        r += convLE(self.get('sh_offset'),  8)
+        r += convLE(self.get('flags'),      4)
+        r += convLE(self.get('eh_size'),    2)
+        r += convLE(self.get('ph_size'),    2)
+        r += convLE(self.get('ph_num'),     2)
+        r += convLE(self.get('sh_size'),    2)
+        r += convLE(self.get('sh_num'),     2)
+        r += convLE(self.get('shstrndx'),   2)
+
+        return r

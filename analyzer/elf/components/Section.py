@@ -1,11 +1,9 @@
 class Section(object):
 
-    def __init__(self, bodyList, name, sh, phType, phFlags):
+    def __init__(self, bodyList, name, sh):
         self.bodyList = bodyList
         self.name = name
         self.sh = sh
-        self.phType = phType
-        self.phFlags = phFlags
 
     def getBodyList(self):
         return self.bodyList
@@ -16,12 +14,6 @@ class Section(object):
     def getSh(self):
         return self.sh
 
-    def getPhType(self):
-        return self.phtype
-
-    def getPhFlags(self):
-        return self.phFlags
-
     def setBodyList(self, bodyList):
         self.bodyList = bodyList
 
@@ -30,12 +22,6 @@ class Section(object):
 
     def setSh(self, sh):
         self.sh = sh
-
-    def setPhType(self, phType):
-        self.phType = phType
-
-    def setPhFlags(self, phFlags):
-        self.phFlags = phFlags
 
     # method for debug
     def echo(self):

@@ -1,4 +1,5 @@
 from Header import Header
+from elf.utils import *
 
 class Sh(Header):
 
@@ -20,3 +21,18 @@ class Sh(Header):
         self.clearBinList()
 
         return self
+
+    def output(self):
+        r = []
+        r += convLE(self.get('name_index'),         4)
+        r += convLE(self.get('type'),               4)
+        r += convLE(self.get('flag'),               8)
+        r += convLE(self.get('address'),            8)
+        r += convLE(self.get('offset'),             8)
+        r += convLE(self.get('size'),               8)
+        r += convLE(self.get('link'),               4)
+        r += convLE(self.get('info'),               4)
+        r += convLE(self.get('address_align'),      8)
+        r += convLE(self.get('entry_table_size'),   8)
+
+        return r
