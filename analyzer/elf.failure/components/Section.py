@@ -1,12 +1,12 @@
 class Section(object):
 
-    def __init__(self, byteList, name, sh):
-        self.byteList = byteList
+    def __init__(self, bodyList, name, sh):
+        self.bodyList = bodyList
         self.name = name
         self.sh = sh
 
     def getBodyList(self):
-        return self.byteList
+        return self.bodyList
 
     def getName(self):
         return self.name
@@ -14,8 +14,8 @@ class Section(object):
     def getSh(self):
         return self.sh
 
-    def setBodyList(self, byteList):
-        self.byteList = byteList
+    def setBodyList(self, bodyList):
+        self.bodyList = bodyList
 
     def setName(self, name):
         self.name = name

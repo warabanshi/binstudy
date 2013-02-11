@@ -3,22 +3,34 @@ from elf.utils import *
 
 class Sh(Header):
 
-    def retrieve(self, binList, offset = 0):
-        self.setPos(offset)
-        self.setBinList(binList)
+    def __init__(self):
+        Header.__init__(self)
+        self.contents = {
+            'name_index'    : 0,
+            'type'          : 0,
+            'flag'          : 0,
+            'address'       : 0,
+            'offset'        : 0,
+            'size'          : 0,
+            'link'          : 0,
+            'info'          : 0,
+            'address_align' : 0,
+            'entry_table_size': 0,
+        }
 
-        self.set('name_index',         self.getDw())
-        self.set('type',               self.getDw())
-        self.set('flag',               self.getQw())
-        self.set('address',            self.getQw())
-        self.set('offset',             self.getQw())
-        self.set('size',               self.getQw())
-        self.set('link',               self.getDw())
-        self.set('info',               self.getDw())
-        self.set('address_align',      self.getQw())
-        self.set('entry_table_size',   self.getQw())
+    def retrieve(self, byteList, offset = 0):
+        self.resetPos(offset)
 
-        self.clearBinList()
+        self.set('name_index',         self.getDw(byteList))
+        self.set('type',               self.getDw(byteList))
+        self.set('flag',               self.getQw(byteList))
+        self.set('address',            self.getQw(byteList))
+        self.set('offset',             self.getQw(byteList))
+        self.set('size',               self.getQw(byteList))
+        self.set('link',               self.getDw(byteList))
+        self.set('info',               self.getDw(byteList))
+        self.set('address_align',      self.getQw(byteList))
+        self.set('entry_table_size',   self.getQw(byteList))
 
         return self
 
