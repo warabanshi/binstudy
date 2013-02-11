@@ -1,0 +1,32 @@
+phtype      phflags
+
+PHDR        RE
+
+INTERP      R
+    .interp     PROGBITS    A
+
+LOAD        RE 
+    .interp             PROGBITS    A
+    .note.gnu.build-id  NOTE        A
+    .hash               HASH        A
+    .gnu.hash           GNU_HASH    A
+    .dynsym             DYNSYM      A
+    .synstr             STRTAB      A
+    .gnu.version        VERSYM      A
+    .gnu.version_r      VERNEED     A
+    .rela.plt           RELA        A
+    .plt                PROGBITS    AX
+    .text               PROGBITS    AX
+
+LOAD        RW
+    .dynamic            DYNAMIC     WA
+    .got.plt            PROGBITS    WA
+
+DYNAMIC     RW
+    .dynamic            DYNAMIC     WA
+
+NOTE        R
+    .note.gnu.build-id  NOTE        A
+
+GNU_RELRO   R
+    .dynamic            DYNAMIC     WA
