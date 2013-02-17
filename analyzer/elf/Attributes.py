@@ -102,49 +102,9 @@ shFlags = {
     'AX'    : shFlag['ALLOC'] | shFlag['EXECINSTR'],
     'AWX'   : shFlag['ALLOC'] | shFlag['WRITE'] | shFlag['EXECINSTR'],
 }
-        
-rel = {
-    (pType['INTERP'], pFlags['R']) : (
-        (shType['PROGBITS'], shFlags['A']),
-    ),
 
-    (pType['LOAD'], pFlags['RX']) : (
-        (shType['PROGBITS'], shFlags['A']),
-        (shType['PROGBITS'], shFlags['AX']),
-        (shType['HASH'],     shFlags['A']),
-        (shType['GNU_HASH'], shFlags['A']),
-        (shType['DYNSYM'],   shFlags['A']),
-        (shType['STRTAB'],   shFlags['A']),
-        #(shType['VERSYM'],   shFlags['A']),
-        #(shType['VERNEED'],  shFlags['A']),
-        (shType['RELA'],     shFlags['A']),
-        (shType['NOTE'], shFlags['A']),
-    ),
-
-    (pType['LOAD'], pFlags['RW']) : (
-        (shType['PROGBITS'], shFlags['AW']),
-        (shType['DYNAMIC'], shFlags['AW']),
-    ),
-
-    (pType['NOTE'], pFlags['R']) : (
-        (shType['NOTE'], shFlags['A']),
-    ),
-
-    (pType['GNU_RELRO'], pFlags['R']) : (
-        (shType['DYNAMIC'], shFlags['AW']),
-    ),
-
-    (pType['DYNAMIC'], pFlags['RW']) : (
-        (shType['DYNAMIC'], shFlags['AW']),
-    ),
-}
-
-def shouldIntoProgram(pType, pFlags, shType, shFlags):
-    pPair   = (pType, pFlags)
-    shPair  = (shType, shFlags)
-
-    if pPair in rel:
-        shPattern = rel[pPair]
-        return shPair in shPattern
-    
-    return False
+def getPhFlag(flag):
+    try:
+        return pFlag[pFlag.index(flag)]
+    except:
+        return None

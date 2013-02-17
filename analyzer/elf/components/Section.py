@@ -23,6 +23,9 @@ class Section(object):
     def setSh(self, sh):
         self.sh = sh
 
+    def setAddr(self, addr):
+        None    # implement later
+
     # method for debug
     def echo(self):
         lm = lambda n: (n, hex(n))
