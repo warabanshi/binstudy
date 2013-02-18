@@ -5,37 +5,58 @@ from ctypes import *
 
 class WriteElf:
 
-    def __init__(self, phCtrl, shCtrl):
-        self.phCtrl = phCtrl
-        self.shCtrl = shCtrl
+    def __init__(self):
+        self.sectionList = {}
+        self.segmentList = {}
+        self.startAddr = 0
+
+    def setSection(self, sctNull, sctList, sctStr):
+        self.sectionList['null'] = sctNull
+        self.sectionList['list'] = sctList
+        self.sectionList['str'] = sctStr
+
+    def setSegment(self, segPhdr, segList):
+        self.segmentList['phdr'] = segPhdr
+        self.segmentList['list'] = segList
+
+    def setStartAddr(self, startAddr):
+        self.startAddr = startAddr
 
     def make(self):
-        # test chu
-        #[s.echo() for s in self.shCtrl.getSectionList()]
+        bodyLen = sum([len(s.bodyList) for s in self.segmentList['list']])
+        shStrLen = len(self.sectionList['str'].getBodyList())
+        shStrOff = 64 + 56 + 56 * len(self.segmentList['list']) + bodyLen
+        shOff = shStrOff + shStrLen
 
-        # restruct shstrtab
-        shStr = self.shCtrl.makeShStr()
-        self.shCtrl.setShStrTab(shStr)
-
-        # recalcurate name_index
-        self.shCtrl.resetNameIndex(shStr)
-
-        # set section to program list
-        self.phCtrl.setSection(self.shCtrl.getSectionList())
+        print(map(chr, self.sectionList['str'].getBodyList()))
+        print("segment len: %d, body len: %d" % (len(self.segmentList['list']), bodyLen))
 
         eh = self.makeEhBase()
-        eh = self.phCtrl.restructHeaders(eh)
-        ph = self.phCtrl.outputPh()
-        seg = self.phCtrl.outputSegment()
-        seg += self.getShStrTab(self.shCtrl)
-        eh = self.setShPart(eh, self.shCtrl)
-        sh = [0x0 for i in range(64)]
-        sh += self.phCtrl.outputSh()
+        eh.set('entry_addr', self.startAddr)
+        eh.set('ph_offset', 64)
+        eh.set('sh_offset', shOff)
+        eh.set('ph_num', len(self.segmentList['list'])+1)
+        eh.set('sh_num', len(self.sectionList['list'])+2)
+        eh.set('shstrndx', len(self.sectionList['list'])+1)
 
-        eh.set('sh_offset', len(eh.output() + ph + seg))
-        eh.set('entry_addr', len(eh.output() + ph))
+        ph = self.segmentList['phdr'].getPh().output()
+        body = []
+        for seg in self.segmentList['list']:
+            ph += seg.getPh().output()
+            body += seg.getBodyList()
 
-        result = eh.output() + ph + seg + sh
+        sh = self.sectionList['null'].getSh().output()
+        for sec in self.sectionList['list']:
+            sh += sec.getSh().output()
+
+        body += self.sectionList['str'].getBodyList()
+
+        strSh = self.sectionList['str'].getSh()
+        strSh.set('offset', shStrOff)
+        sh += strSh.output()
+
+
+        result = eh.output() + ph + body + sh
         p = (c_ubyte * len(result))()
         p[:] = result
         with open('write.out', 'wb') as fp:
@@ -65,19 +86,3 @@ class WriteElf:
         e.retrieve(eh)
 
         return e
-
-    def setShPart(self, eh, shCtrl):
-        sList = shCtrl.getSectionList()
-        for (i, s) in enumerate(sList):
-            if s.getName() == '.shstrtab':
-                eh.set('shstrndx', i)
-
-        eh.set('sh_num', len(sList))
-        eh.set('sh_size', 64)
-
-        return eh
-
-    def getShStrTab(self, shCtrl):
-        for s in shCtrl.getSectionList():
-            if s.getName() == '.shstrtab':
-                return s.getBodyList()

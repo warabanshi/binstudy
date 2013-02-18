@@ -11,6 +11,7 @@ class SegmentController(object):
     def __init__(self):
         self.segmentList = []
         self.phSegment = None
+        self.startAddr = 0
 
     def makeSegment(self, sctList):
 
@@ -43,6 +44,9 @@ class SegmentController(object):
                 bodyList += sct.getBodyList()
                 align = sct.getSh().get('address_align')
 
+                if sct.getName() == '.text':
+                    self.startAddr = addr
+
                 # padding 0x00
                 if len(sct.getBodyList()) % align > 0:
                     bodyList += [0x0 for x in range(align - len(sct.getBodyList()) % align)]
@@ -51,7 +55,8 @@ class SegmentController(object):
                 sctAddr = addr + len(bodyList)
 
             ph = Ph()
-            ph.set('segment_type',      getPhFlag(flag))
+            #ph.set('segment_type',      getPhFlag(flag))
+            ph.set('segment_type',      1)
             ph.set('permission_flag',   flag)
             ph.set('offset',            offset)
             ph.set('virtual_addr',      addr)
@@ -70,6 +75,12 @@ class SegmentController(object):
         self.phSegment = self.setPhSegment([s.getPh() for s in self.segmentList], len(phList))
 
         return sctList
+
+    def getSegments(self):
+        return self.phSegment, self.segmentList
+
+    def getStartAddr(self):
+        return self.startAddr
 
     def setPhSegment(self, phList, phNum):
         ph = Ph()

@@ -4,7 +4,7 @@ from elf.Utils import *
 class Ph(Header):
 
     def retrieve(self, binList, offset = 0):
-        self.setPos(offset)
+        self.resetPos(offset)
         self.setBinList(binList)
 
         self.set('segment_type',       self.getDw())

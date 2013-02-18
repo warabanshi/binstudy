@@ -13,7 +13,7 @@ byteList =  [0xb8, 0x3c, 0x00, 0x00, 0x00]
 byteList += [0xbf, 0x2a, 0x00, 0x00, 0x00]
 byteList += [0x0f, 0x05]
 sh = Sh()
-sh.set('type', 3)
+sh.set('type', 1)
 sh.set('flag', 6)
 sh.set('size', len(byteList))
 sh.set('address_align', 1)
@@ -22,23 +22,28 @@ sh.set('entry_table_size', 0)
 sctCtrl.append(Section(byteList, name, sh))
 
 # dummy for test
-name = '.interp'
-byteList =  [0xb8, 0x3c, 0x00, 0x00, 0x00]
-byteList += [0xbf, 0x2a, 0x00, 0x00, 0x00]
-byteList += [0x0f, 0x05]
-sh = Sh()
-sh.set('type', 3)
-sh.set('flag', 6)
-sh.set('size', len(byteList))
-sh.set('address_align', 1)
-sh.set('entry_table_size', 0)
+#name = '.interp'
+#byteList =  [0xb8, 0x3c, 0x00, 0x00, 0x00]
+#byteList += [0xbf, 0x2a, 0x00, 0x00, 0x00]
+#byteList += [0x0f, 0x05]
+#sh = Sh()
+#sh.set('type', 3)
+#sh.set('flag', 6)
+#sh.set('size', len(byteList))
+#sh.set('address_align', 1)
+#sh.set('entry_table_size', 0)
+#
+#sctCtrl.append(Section(byteList, name, sh))
 
-sctCtrl.append(Section(byteList, name, sh))
 sctNull, sctList, sctStr = sctCtrl.getSectionList()
 
 segCtrl = SegmentController()
 sctList = segCtrl.makeSegment(sctList)
+phSeg, segList = segCtrl.getSegments()
 
+we = WriteElf()
+we.setSection(sctNull, sctList, sctStr)
+we.setSegment(phSeg, segList)
+we.setStartAddr(segCtrl.getStartAddr())
 
-#we = WriteElf(sCtrl)
-#we.make()
+we.make()

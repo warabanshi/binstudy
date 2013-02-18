@@ -9,6 +9,9 @@ class Segment(object):
     def getPh(self):
         return self.ph
 
+    def getBodyList(self):
+        return self.bodyList
+
 #    def getStartAddr(self):
 #        return self.startAddr
 #
