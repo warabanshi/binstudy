@@ -103,8 +103,24 @@ shFlags = {
     'AWX'   : shFlag['ALLOC'] | shFlag['WRITE'] | shFlag['EXECINSTR'],
 }
 
+correspondence = {
+    shFlags['A']    : pFlags['R'],
+    shFlags['W']    : pFlags['W'],
+    shFlags['X']    : pFlags['X'],
+    shFlags['AW']   : pFlags['RW'],
+    shFlags['AX']   : pFlags['RX'],
+    shFlags['AWX']  : pFlags['RWX'],
+}
+
 def getPhFlag(flag):
     try:
-        return pFlag[pFlag.index(flag)]
+        return correspondence[flag]
     except:
         return None
+
+def getPtype(name):
+    try:
+        return pType[name]
+    except:
+        return None
+

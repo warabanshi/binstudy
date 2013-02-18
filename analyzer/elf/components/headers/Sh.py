@@ -1,5 +1,4 @@
 from Header import Header
-from elf.utils import *
 
 class Sh(Header):
 

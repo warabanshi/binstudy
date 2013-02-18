@@ -1,5 +1,5 @@
-import elf.Attributes
-from elf.sectionOrder import getOrder
+from elf.Attributes import *
+from elf.SectionOrder import *
 from elf.components.headers.Ph import Ph
 from elf.components.Segment import Segment
 
@@ -13,6 +13,8 @@ class SegmentController(object):
         self.phSegment = None
 
     def makeSegment(self, sctList):
+
+        # separate sections by flag value and sort section order
         segBaseTbl = {}
         for sct in sctList:
             name = sct.getName()
@@ -26,13 +28,18 @@ class SegmentController(object):
         for (flag, segList) in segBaseTbl.items():
             segTbl[flag] = sorted(segList, key=lambda x: x[0])
 
+        # set base position
         offset = 64 + 56 + 56 * len(segTbl)     # EH + PHDR + PHs offset
         addr = self.orgAddr + offset
         phList = []
 
         for (flag, contentList) in segTbl.items():
             bodyList = []
+            sctOff = offset
+            sctAddr = addr
             for (order, sct) in contentList:
+                sct.getSh().set('address', sctAddr)
+                sct.getSh().set('offset', sctOff)
                 bodyList += sct.getBodyList()
                 align = sct.getSh().get('address_align')
 
@@ -40,15 +47,18 @@ class SegmentController(object):
                 if len(sct.getBodyList()) % align > 0:
                     bodyList += [0x0 for x in range(align - len(sct.getBodyList()) % align)]
 
+                sctOff = offset + len(bodyList)
+                sctAddr = addr + len(bodyList)
+
             ph = Ph()
-            ph.set('segment_type',      elf.Attributes.getPhFlag(flag))     # implement later
+            ph.set('segment_type',      getPhFlag(flag))
             ph.set('permission_flag',   flag)
             ph.set('offset',            offset)
-            ph.set('virtual_addr',      addr)     # implement later
-            ph.set('physical_addr',     addr)     # implement later
-            ph.set('filesize',          0)      # implement later
-            ph.set('memory_size',       0)      # implement later
-            ph.set('align',             0)      # implement later
+            ph.set('virtual_addr',      addr)
+            ph.set('physical_addr',     addr)
+            ph.set('filesize',          len(bodyList))
+            ph.set('memory_size',       len(bodyList))
+            ph.set('align',             self.loadAlign)
 
             self.segmentList.append(Segment(ph, bodyList))
             phList.append(ph)
@@ -56,15 +66,30 @@ class SegmentController(object):
             offset += len(bodyList)
             addr += offset
 
-        print(phList[0].output())
         # make PHDR
-        self.setPhSegment(offset, addr, len(phList))
-
+        self.phSegment = self.setPhSegment([s.getPh() for s in self.segmentList], len(phList))
 
         return sctList
 
-    def setPhSegment(self, offset, addr, phNum):
-        None # implement later
+    def setPhSegment(self, phList, phNum):
+        ph = Ph()
+        ph.set('segment_type',       pType['PHDR'])
+        ph.set('permission_flag',    6)
+        ph.set('offset',             0x40)
+        ph.set('virtual_addr',       self.orgAddr + 0x40)
+        ph.set('physical_addr',      self.orgAddr + 0x40)
+        ph.set('filesize',           56*phNum)
+        ph.set('memory_size',        56*phNum)
+        ph.set('align',              8)
+
+        bodyList = []
+        for p in phList:
+            bodyList += p.output()
+
+        bodyList += ph.output()
+
+        return Segment(ph, bodyList)
+        
 
 #    def append(self, p):
 #        self.segmentList.append(p)
