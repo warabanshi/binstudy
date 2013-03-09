@@ -45,4 +45,16 @@ relationList = (
     ('.interp', SEC['HAS_CONTENTS'] | SEC['ALLOC'] | SEC['LOAD'] | SEC['READONLY'] | SEC['DATA']),
     ('.sdata',  SEC['HAS_CONTENTS'] | SEC['ALLOC'] | SEC['LOAD'] | SEC['DATA'] | SEC['SMALL_DATA']),
     ('.comment',SEC['HAS_CONTENTS']),
+
+    ('.note',               SEC['ALLOC'] | SEC['READONLY']),
+    ('.note.gnu.build-id',  SEC['ALLOC'] | SEC['READONLY']),
+    ('.hash',       SEC['ALLOC'] | SEC['READONLY']),
+    ('.gnu.hash',   SEC['ALLOC'] | SEC['READONLY']),
+    ('.dynsym',     SEC['ALLOC'] | SEC['READONLY']),
+    ('.dynstr',     SEC['ALLOC'] | SEC['READONLY']),
+    ('.version',    SEC['ALLOC'] | SEC['READONLY']),
+    ('.version_r',  SEC['ALLOC'] | SEC['READONLY']),
+    ('.rela.plt',   SEC['ALLOC'] | SEC['READONLY']),
+    ('.dynamic',    SEC['ALLOC'] | SEC['LOAD'] | SEC['HAS_CONTENTS'] | SEC['IN_MEMORY'] | SEC['LINKER_CREATED']),
+    ('.got.plt',    SEC['ALLOC'] | SEC['LOAD'] | SEC['HAS_CONTENTS'] | SEC['IN_MEMORY'] | SEC['LINKER_CREATED']),
 )
