@@ -3,7 +3,6 @@ class SectionAggregator(object):
 
     def __init__(self):
         self.sectionList = []
-        self.nameList = []
 
     def append(self, section):
         self.sectionList.append((section, section.getName()))

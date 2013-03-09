@@ -52,9 +52,10 @@ relationList = (
     ('.gnu.hash',   SEC['ALLOC'] | SEC['READONLY']),
     ('.dynsym',     SEC['ALLOC'] | SEC['READONLY']),
     ('.dynstr',     SEC['ALLOC'] | SEC['READONLY']),
-    ('.version',    SEC['ALLOC'] | SEC['READONLY']),
-    ('.version_r',  SEC['ALLOC'] | SEC['READONLY']),
+    ('.gnu.version',SEC['ALLOC'] | SEC['READONLY']),
+    ('.gnu.version_r',  SEC['ALLOC'] | SEC['READONLY']),
     ('.rela.plt',   SEC['ALLOC'] | SEC['READONLY']),
+    ('.plt',        SEC['ALLOC'] | SEC['READONLY']),
     ('.dynamic',    SEC['ALLOC'] | SEC['LOAD'] | SEC['HAS_CONTENTS'] | SEC['IN_MEMORY'] | SEC['LINKER_CREATED']),
     ('.got.plt',    SEC['ALLOC'] | SEC['LOAD'] | SEC['HAS_CONTENTS'] | SEC['IN_MEMORY'] | SEC['LINKER_CREATED']),
 )

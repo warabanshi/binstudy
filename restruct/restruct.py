@@ -44,3 +44,5 @@ for idx in range(1, shNum):
     secAggr.append(Section(body, name, sh))
 
 secAggr.dump()
+
+# restruct phase
