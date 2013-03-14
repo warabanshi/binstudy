@@ -3,6 +3,7 @@ from elf.components.headers.Eh import Eh
 from elf.components.headers.Sh import Sh
 from elf.components.Section import Section
 from elf.components.SectionAggregator import SectionAggregator
+from elf.components.SegmentMaker import SegmentMaker
 
 # teardown ELF file
 f = open('test.out')
@@ -43,6 +44,6 @@ for idx in range(1, shNum):
 
     secAggr.append(Section(body, name, sh))
 
-secAggr.dump()
-
 # restruct phase
+segMake = SegmentMaker(secAggr)
+segMake.make()

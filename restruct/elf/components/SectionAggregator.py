@@ -20,3 +20,16 @@ class SectionAggregator(object):
 
     def remove(self, name):
         del(self.sectionList[self.find(name)])
+
+    def get(self, key = None):
+        if key == None:
+            return self.sectionList
+
+        if isinstance(key, int):
+            return self.sectionList[key]
+        else:
+            idx = self.find(key)
+            if idx == None:
+                return None
+            else:
+                return self.get(idx)
