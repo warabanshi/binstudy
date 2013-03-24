@@ -47,3 +47,6 @@ for idx in range(1, shNum):
 # restruct phase
 segMake = SegmentMaker(secAggr)
 segMake.make()
+segMake.setOffset()
+segMake.setSize()
+segMake.setAddr(0x400000)

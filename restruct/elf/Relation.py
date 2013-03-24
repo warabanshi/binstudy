@@ -168,3 +168,17 @@ relationList = {
     '.dynamic':    (SEC['ALLOC'] | SEC['LOAD'] | SEC['HAS_CONTENTS'] | SEC['IN_MEMORY'] | SEC['LINKER_CREATED']),
     '.got.plt':    (SEC['ALLOC'] | SEC['LOAD'] | SEC['HAS_CONTENTS'] | SEC['IN_MEMORY'] | SEC['LINKER_CREATED']),
 }
+
+orderList = [
+    'PHDR', 'INTERP', 'LOAD_RX', 'LOAD_RW', 'DYNAMIC',
+    'NOTE', 'GNU_EH_FRAME', 'GNU_RELRO',
+]
+
+segmentRelation = {
+    'LOAD_RX':  [
+        'PHDR', 'INTERP', 'NOTE', 'GNU_EH_FRAME',
+    ],
+    'LOAD_RW':  [
+        'DYNAMIC', 'GNU_RELRO',
+    ]
+}
