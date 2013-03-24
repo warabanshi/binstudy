@@ -11,6 +11,26 @@ class SegmentMaker(object):
     def getSegmentList(self):
         return self.segmentList
 
+    def getSegment(self, key):
+        try:
+            return self.segmentList[key]
+        except:
+            return None
+
+    def getEntryAddr(self):
+        for key, seg in self.segmentList.items():
+            try:
+                sec = seg.getSectionByName('.text')
+                return sec.getSh().get('address')
+            except:
+                continue
+
+    def getCount(self):
+        return len(self.segmentList)
+
+    def getSectionList(self):
+        return self.sectionAggregator.get()
+
     def make(self):
         # make INTERP segment
         r = self.sectionAggregator.get('.interp')
@@ -153,6 +173,13 @@ class SegmentMaker(object):
                     None
 
                 # debug
-                seg.echo()
+                #seg.echo()
             except:
                 continue
+
+    def resetSection(self):
+        # make shstrtbl
+        self.sectionAggregator.makeShStrSection()
+        endOfBody = self.sectionAggregator.resetOffset(self.getCount()*56 + 64)
+
+        return endOfBody

@@ -29,6 +29,11 @@ class Segment(object):
         else:
             return self.sectionList[index]
 
+    def getSectionByName(self, name):
+        for sec in self.sectionList:
+            if sec.getName() == name:
+                return sec
+
     def getSize(self):
         return sum([s.getSh().get('size') for s in self.sectionList])
 
