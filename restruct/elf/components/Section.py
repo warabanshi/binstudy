@@ -5,7 +5,7 @@ class Section(object):
         self.name = name
         self.sh = sh
 
-    def getBodyList(self):
+    def getBody(self):
         return self.byteList
 
     def getName(self):
@@ -14,7 +14,7 @@ class Section(object):
     def getSh(self):
         return self.sh
 
-    def setBodyList(self, byteList):
+    def setBody(self, byteList):
         self.byteList = byteList
 
     def setName(self, name):

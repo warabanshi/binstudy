@@ -1,15 +1,25 @@
+from elf.Utils import *
 from elf.components.headers.Ph import Ph
 
 class Segment(object):
 
     def __init__(self, pType, pFlag, align = 0):
         self.sectionList = []
-        self.pType = pType
-        self.pFlag = pFlag
+        self.byteList = []
         self.ph = self.makeBasePh(pType, pFlag, align)
     
     def appendSection(self, sec):
+        align = sec.getSh().get('address_align')
+
+        # set tentative offset 
+        sec.set('offset', len(self.byteList))
+
+        self.byteList += alignment(sec.getBody(), align)
         self.sectionList.append(sec)
+
+        # set tentative size
+        self.ph.set('filesize', len(self.byteList))
+        self.ph.set('memory_size', len(self.byteList))
 
     def count(self):
         return len(self.sectionList)
@@ -18,10 +28,10 @@ class Segment(object):
         return self.ph
 
     def getType(self):
-        return self.pType
+        return self.ph.get('pType')
 
     def getFlag(self):
-        return self.pFlag
+        return self.ph.get('pFlag')
 
     def getSection(self, index = None):
         if index == None:
@@ -53,7 +63,7 @@ class Segment(object):
     def echo(self):
         lm = lambda n: (n, hex(n))
 
-        print('====== Segment(type=%d) ======' % self.pType)
+        print('====== Segment(type=%d) ======' % self.ph.get('pType'))
 
         print('segment_type     %s' % self.ph.get('segment_type'))
         print('permission_flag: %s' % self.ph.get('permission_flag'))

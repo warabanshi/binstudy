@@ -20,3 +20,9 @@ def retrieveStr(shStr, index):
     s = shStr[index:]
     return s[:s.find("\0")]
 
+def alignment(bodyList, align):
+    mod = len(bodyList) % align
+    if mod > 0:
+        bodyList += [0x00 for i in range(align - mod)]
+
+    return bodyList

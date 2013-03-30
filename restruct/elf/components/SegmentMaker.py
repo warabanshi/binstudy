@@ -147,6 +147,11 @@ class SegmentMaker(object):
                 seg.getPh().set('filesize', seg.getSize())
                 seg.getPh().set('memory_size', seg.getSize())
 
+                # test
+                if key == 'LOAD_RX':
+                    seg.getPh().set('filesize', seg.getSize()+606)
+                    seg.getPh().set('memory_size', seg.getSize()+606)
+
                 # debug
                 #seg.echo()
             except:

@@ -77,7 +77,7 @@ for key in orderList:
     byteList += seg.getPh().output()
 
 for sec, name in segMake.getSectionList():
-    body = sec.getBodyList()
+    body = sec.getBody()
     align = sec.getSh().get('address_align')
     mod = len(body) % align
 
