@@ -134,7 +134,14 @@ class SegmentManager(object):
 
     def getSize(self, key, seg, secm):
         try:
-            return sum([len(h['body']) for h in [secm.get(name) for name in seg.getSectionName()]])
+            if key == 'PHDR':
+                return len(self.segmentList) * 56
+            elif key == 'LOAD_RX':
+                headerSize = 0x40 + len(self.segmentList) * 56
+                bodySize = sum([len(h['body']) for h in [secm.get(name) for name in seg.getSectionName()]])
+                return headerSize + bodySize
+            else:
+                return sum([len(h['body']) for h in [secm.get(name) for name in seg.getSectionName()]])
 
         except BaseException, e:
             print(e)

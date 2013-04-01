@@ -1,6 +1,5 @@
 from elf.Utils import *
 from elf.Relation import *
-from elf.components.Section import Section
 from elf.components.headers.Sh import Sh
 
 class SectionManager(object):
