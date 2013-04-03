@@ -42,6 +42,8 @@ class Restructor(object):
         eh.set('sh_num', len(secm.get())+1) # plus null section
         eh.set('shstrndx', secm.find('.shstrtab')+1)
 
+        eh.echo()
+
         byteList = eh.output()
         for ph in phList:
             byteList += ph.output()

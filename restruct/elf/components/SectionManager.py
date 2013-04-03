@@ -37,14 +37,16 @@ class SectionManager(object):
         body = []
         newSectionList = []
         for (order, h) in sortedSectionList:
-            h['sh'].set('offset', headerSize + len(body))
-
             tmpBody = h['body']
             align = h['sh'].get('address_align')
-            mod = len(tmpBody) % align
-            if mod > 0:
-                tmpBody += [0x00 for x in range(align - mod)]
+            mod = (headerSize+len(body)) % align
+            padding = 0
 
+            if mod > 0:
+                padding = align - mod
+                tmpBody = [0x00 for x in range(align - mod)] + tmpBody
+
+            h['sh'].set('offset', headerSize + len(body) + padding)
             body += tmpBody
             newSectionList.append(h)
 
