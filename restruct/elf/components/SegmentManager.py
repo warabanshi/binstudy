@@ -11,6 +11,12 @@ class SegmentManager(object):
     def getSegmentList(self):
         return self.segmentList
 
+    def getSegment(self, key):
+        try:
+            return self.segmentList[key]
+        except:
+            return None
+
     def mapping(self, sectionManager):
         # make INTERP segment
         h = sectionManager.get('.interp')
@@ -102,7 +108,12 @@ class SegmentManager(object):
 
     def makePh(self, sectionManager):
         phList = []
-        for key, seg in self.segmentList.items():
+
+        for key in orderList:
+            seg = self.getSegment(key)
+            if seg == None:
+                continue
+
             offset = self.getOffset(key, seg, sectionManager)
 
             ph = Ph()
@@ -138,7 +149,15 @@ class SegmentManager(object):
                 return len(self.segmentList) * 56
             elif key == 'LOAD_RX':
                 headerSize = 0x40 + len(self.segmentList) * 56
-                bodySize = sum([len(h['body']) for h in [secm.get(name) for name in seg.getSectionName()]])
+                nameList = [secm.get(name) for name in seg.getSectionName()]
+                sizeList = [(len(h['body']), h['sh'].get('address_align')) for h in nameList]
+                bodySize = 0
+
+                for (bs, align) in sizeList:
+                    startPos = headerSize + bodySize 
+                    paddingSize = 0 if startPos % align == 0 else align - (startPos % align)
+                    bodySize += paddingSize + bs
+
                 return headerSize + bodySize
             else:
                 return sum([len(h['body']) for h in [secm.get(name) for name in seg.getSectionName()]])

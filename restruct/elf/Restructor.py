@@ -29,6 +29,7 @@ class Restructor(object):
         body = secm.makeBody(headerSize)
         phList = segm.makePh(secm)
         secm.resetAddress(0x400000)
+        print(hex(len(body)+headerSize))
         shStrTab = secm.makeShStrSection(headerSize + len(body))
 
         endOfBody = headerSize + len(body + shStrTab)
@@ -42,7 +43,7 @@ class Restructor(object):
         eh.set('sh_num', len(secm.get())+1) # plus null section
         eh.set('shstrndx', secm.find('.shstrtab')+1)
 
-        eh.echo()
+        #eh.echo()
 
         byteList = eh.output()
         for ph in phList:

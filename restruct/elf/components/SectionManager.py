@@ -46,6 +46,10 @@ class SectionManager(object):
                 padding = align - mod
                 tmpBody = [0x00 for x in range(align - mod)] + tmpBody
 
+            if h['name'] == '.dynamic':
+                padding += 2880
+                tmpBody = [0x00 for x in range(2880)] + tmpBody
+
             h['sh'].set('offset', headerSize + len(body) + padding)
             body += tmpBody
             newSectionList.append(h)
