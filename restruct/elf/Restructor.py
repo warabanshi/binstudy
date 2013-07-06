@@ -18,24 +18,29 @@ class Restructor(object):
     def restruct(self):
         secm = SectionManager()
         segm = SegmentManager()
+
+        # get sections from byteList
         se = SectionExtractor(self.byteList)
 
         for name, body, sh in se.extract():
             secm.append(name, body, sh)
         
+        # map sections to segments
         segm.mapping(secm)
 
+        # 0x40 is ELF header size and 56 is program header size
         headerSize = 0x40 + len(segm.getSegmentList()) * 56
         body = secm.makeBody(headerSize)
         phList = segm.makePh(secm)
         secm.resetAddress(0x400000)
-        print(hex(len(body)+headerSize))
+        # make shstrtbl
         shStrTab = secm.makeShStrSection(headerSize + len(body))
 
         endOfBody = headerSize + len(body + shStrTab)
 
+        # make ELF header
         eh = Eh()
-        eh.retrieve(self.byteList[0:64])
+        eh.retrieve(self.byteList[0:64])    # get ELF header from origin file
         eh.set('entry_addr', secm.get('.text')['sh'].get('address'))
         eh.set('ph_offset', 0x40)
         eh.set('sh_offset', endOfBody)
@@ -43,8 +48,10 @@ class Restructor(object):
         eh.set('sh_num', len(secm.get())+1) # plus null section
         eh.set('shstrndx', secm.find('.shstrtab')+1)
 
+        # for debug
         #eh.echo()
 
+        # make file by restructed byteList
         byteList = eh.output()
         for ph in phList:
             byteList += ph.output()
