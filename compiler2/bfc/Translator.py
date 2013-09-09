@@ -5,6 +5,7 @@ class Translator(object):
     def __init__(self):
         self.funcList = []  # dummy address list
         self.addrList = []  # dummy address list
+        self.text = ''
 
     def addFuncList(self, offset, size, purpose):
         self.funcList.append( (offset, size, purpose) )
@@ -17,6 +18,9 @@ class Translator(object):
 
     def getAddrList(self):
         return self.addrList
+
+    def getText(self):
+        return self.text
 
     def translate(self, source):
         idxStack = []   # stack list index for loop
@@ -91,4 +95,4 @@ class Translator(object):
         r += [0xbf, 0x2a, 0x00, 0x00, 0x00]
         r += [0x0f, 0x05]
 
-        return struct.pack(str(len(r))+'B', *r)
+        self.text = struct.pack(str(len(r))+'B', *r)

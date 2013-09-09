@@ -1,4 +1,4 @@
-from elf.Utils import *
+from bfc.elf.Utils import *
 
 class Header(object):
 

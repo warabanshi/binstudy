@@ -1,6 +1,7 @@
 import sys
 import os.path
 from Translator import Translator
+from MakeElf import MakeElf
 
 class Compiler:
 
@@ -11,6 +12,10 @@ class Compiler:
             print 'error: must specify target filename'
             sys.exit(1)
           
+        if not os.path.exists(inName):
+            print 'file doesnt exists: ' + inName
+            sys.exit(1)
+
         try:
             outName = sys.argv[2]
         except:
@@ -22,25 +27,16 @@ class Compiler:
     def execute(self):
         print('compile: ' + self.inName + ' to ' + self.outName)
 
-        try:
-            os.path.exists(self.inName)
-        except:
-            print 'file doesnt exists: ' + self.inName
-            sys.exit(1)
-
         source = open(self.inName).read()
         t = Translator()
-        text = t.translate(source)
+        t.translate(source)
 
         # for debug
         print t.getFuncList()
         print t.getAddrList()
 
-        '''
-        e = MakeElf()
-        e.setText(text)
-        e.linking()
-        '''
+        e = MakeElf(t)
+        e.execute()
 
         f = open(self.outName, 'wb')
         #f.write(elf)

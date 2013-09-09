@@ -1,5 +1,5 @@
 from Header import Header
-from elf.Utils import *
+from bfc.elf.Utils import *
 
 # ELF header
 class Eh(Header):

@@ -1,5 +1,5 @@
 from Header import Header
-from elf.Utils import *
+from bfc.elf.Utils import *
 
 # section header
 class Sh(Header):
