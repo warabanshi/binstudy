@@ -22,9 +22,9 @@ def testGlobalModel():
     print "tsize=%d, dsize=%d" % (tsize, dsize)
     gm.initData(len(text), text + f.read(dsize))
 
-    print gm.getData(16, 11)
-    print gm.setData(16, pack('<2B', 0x48, 0x45))
-    print gm.getData(16, 11)
+    print gm.getData(tsize, 11)
+    print gm.setData(tsize, pack('<2B', 0x48, 0x45))
+    print gm.getData(tsize, 11)
 
 
 testGlobalModel()

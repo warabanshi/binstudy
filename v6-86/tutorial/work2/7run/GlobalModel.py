@@ -8,8 +8,8 @@ class GlobalModel(object):
     }
 
     @classmethod
-    def setReverse(cls, flag):
-        cls.reverseFlag = flag
+    def setReverse(cls):
+        cls.reverseFlag = True
 
     @classmethod
     def isReverse(cls):
@@ -31,7 +31,7 @@ class GlobalModel(object):
     @classmethod
     def setData(cls, offset, data):
         if offset < cls.textlen:
-            raise Exception("can't set to .text area")
+            raise Exception("can't rewrite .text area")
 
         tail = offset + len(data)
         cls.alldata = cls.alldata[:offset] + data + cls.alldata[tail:]
