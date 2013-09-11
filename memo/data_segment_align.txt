@@ -1,0 +1,37 @@
+`DATA_SEGMENT_ALIGN(MAXPAGESIZE, COMMONPAGESIZE)'
+     This is equivalent to either
+          (ALIGN(MAXPAGESIZE) + (. & (MAXPAGESIZE - 1)))
+     or
+          (ALIGN(MAXPAGESIZE) + (. & (MAXPAGESIZE - COMMONPAGESIZE)))
+     depending on whether the latter uses fewer COMMONPAGESIZE sized
+     pages for the data segment (area between the result of this
+     expression and `DATA_SEGMENT_END') than the former or not.  If the
+     latter form is used, it means COMMONPAGESIZE bytes of runtime
+     memory will be saved at the expense of up to COMMONPAGESIZE wasted
+     bytes in the on-disk file.
+
+     This expression can only be used directly in `SECTIONS' commands,
+     not in any output section descriptions and only once in the linker
+     script.  COMMONPAGESIZE should be less or equal to MAXPAGESIZE and
+     should be the system page size the object wants to be optimized
+     for (while still working on system page sizes up to MAXPAGESIZE).
+
+     Example:
+            . = DATA_SEGMENT_ALIGN(0x10000, 0x2000);
+
+
+
+`DATA_SEGMENT_ALIGN(MAXPAGESIZE, COMMONPAGESIZE)'
+     This is equivalent to either
+          (ALIGN(MAXPAGESIZE) + (. & (MAXPAGESIZE - 1)))
+     or
+          (ALIGN(MAXPAGESIZE) + (. & (MAXPAGESIZE - COMMONPAGESIZE)))
+
+    後者が以前のものより小さい(data segment(この式の結果からDATA_SEGMENT_ENDの間の領域)へ
+    割り当てられたCOMMONPAGESIZEさいずのページ）か、またはそうでないものを使うかどうかに依存します
+    もし後者のフォームが使われるなら、実行時メモリはCOMMONPAGESIZEバイトが保存され、
+    COMMONPAGESIZEを上限としてディスク上のファイルに無駄なバイトを持つ原因となることを意味します
+    
+    この式はSECTIONSコマンドの中でのみ直接使うことができ、
+    いかなるoutputセクションのdescriptionsでも使えず、かつリンカスクリプトの中で一度しか使えません
+    COMMONPAGESIZEはMAXPAGESIZE以下であるべきで、

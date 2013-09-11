@@ -1,0 +1,24 @@
+ .eh_frame      0x0000000000000000        0x0 test.o
+
+ .gcc_except_table
+  *(.gcc_except_table .gcc_except_table.*)
+
+  .exception_ranges
+   *(.exception_ranges .exception_ranges*)
+           0x00000000004002f8                . = (ALIGN (0x200000) - ((0x200000 - .) & 0x1fffff))
+
+result.value-pre:600000, dot:4002f8, maxp:200000, comp:1000
+condition 1: 0
+condition 2: 0
+condition 3.1: 1
+condition 3.2: 0
+reslut.value-pre:600000
+expld.dot:4002f8
+maxpage - 1:1fffff
+calc:2f8
+reslut.value-post:6002f8
+0x00000000006002f8                . = DATA_SEGMENT_ALIGN (0x200000, 0x1000)
+
+  .eh_frame
+  *(.eh_frame)
+

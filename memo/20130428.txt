@@ -1,0 +1,1 @@
+gcc -Wl,-M -Wl,"-T/usr/lib64/ldscripts/elf_x86_64.x" -s -nostartfiles -o test.out test.o 
