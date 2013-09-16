@@ -8,5 +8,13 @@ def convNum(byteList, byteNum):
 
     return result
 
+def convBytes(num, length):
+    r = []
+    for i in range(length):
+        r.append(num & 0xff)
+        num = num >> 8
+
+    return r
+
 def printInst(pc, nimonic, operand):
     print "%04x: %-13x %s" % (pc, nimonic, operand)

@@ -9,14 +9,12 @@ class Sub(Mnemonic):
     def execute(pc, text, mnemonic):
 
         if mnemonic == 0x812e:      # sub [1234], #1234
-            addr, = unpack('<H', text[2:4])
-            val, = unpack('<H', text[4:6])
-            Sub.subFromAddr(pc, addr, val, 2)
+            addr, val = unpack('<HH', text[2:6])
+            Sub.subFromAddr(pc, addr, val, '<H',  2)
             pcInc = 6
         elif mnemonic == 0x802e:    # sub byte [1234], #12
-            addr, = unpack('<H', text[2:4])
-            val, = unpack('<B', text[4])
-            Sub.subFromAddr(pc, addr, val, 1)
+            addr, val = unpack('<HB', text[2:5])
+            Sub.subFromAddr(pc, addr, val, 'B', 1)
             pcInc = 5
         else:
             msg = "unknown register name specified: " + hex(mnemonic)
@@ -25,15 +23,8 @@ class Sub(Mnemonic):
         return pcInc
     
     @staticmethod
-    def subFromAddr(pc, addr, val, byte):
-        data = convNum(gm.getData(addr, byte), byte)
-
-        if byte == 1:
-            fmt = 'B'
-        elif byte == 2:
-            fmt = 'H'
-        else:
-            raise Exception("invalid byte num specified")
-
-        gm.setData(addr, pack(fmt, (data - val)))
+    def subFromAddr(pc, addr, val, fmt, byte):
+        baseVal, = unpack(fmt, gm.getData(addr, byte))
+        result = baseVal - val
+        gm.setData(addr, pack(fmt, result))
 
