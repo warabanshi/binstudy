@@ -34,5 +34,12 @@ def testGlobalModel():
     print bin(gm.getReg('al'))
     print bin(gm.getReg('ax'))
 
+def testUtil():
+    val = 0b10100000
+    print cmpFrontBit(val, 0b1100)
+    print cmpFrontBit(val, 0b1010)
+    print cmpFrontBit(val, 0b101)
+    print cmpFrontBit(val, 0b11)
 
 testGlobalModel()
+testUtil()

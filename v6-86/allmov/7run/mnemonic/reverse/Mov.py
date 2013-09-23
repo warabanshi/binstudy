@@ -8,43 +8,27 @@ class Mov(Mnemonic):
     @staticmethod
     def execute(pc, text, mnemonic):
 
-        if   mnemonic == 0xb8:    # mov ax, #1
+        if  (mnemonic & 0xf8) == 0b10111000:    # mov immediate to register
+            regList = ['ax', 'cx', 'dx', 'bx', 'sp', 'bp', 'si', 'di']
+            key = mnemonic & 0b00000111
             val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'ax', val)
+            Mov.printVal2Reg(pc, convNum(text, 3), regList[key], val)
             pcInc = 3
-        elif mnemonic == 0xbb:  # mov bx, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'bx', val)
-            pcInc = 3
-        elif mnemonic == 0xb9:  # mov cx, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'cx', val)
-            pcInc = 3
-        elif mnemonic == 0xba:  # mov dx, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'dx', val)
-            pcInc = 3
-        elif mnemonic == 0xbc:  # mov sp, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'sp', val)
-            pcInc = 3
-        elif mnemonic == 0xbd:  # mov bp, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'bp', val)
-            pcInc = 3
-        elif mnemonic == 0xbe:  # mov si, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'si', val)
-            pcInc = 3
-        elif mnemonic == 0xbf:  # mov di, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'di', val)
-            pcInc = 3
-        elif mnemonic == 0xb5:  # mov ch, #12
+
+        elif (mnemonic & 0xfc) == & 0b110011:   # mov immediate to register/memory
+            w = (mnemonic >> 24) & 1
+            mod = (mnemonic >> 22) & 0b11
+            r_div_m = (mnemonic >> 16) & 0b111
+            regList = ['bx+si', 'bx+di', 'bp+si', 'bp+di', 'si', 'di', 'bp', 'bx']
+            val, = unpack('<H', text[2:4])
+            Mov.printVal2Ref(pc ,convNum(text, 4), regList[r_div_m], val)
+            pcInc = 4
+
+        elif mnemonic == 0xb5:  # mov ch, #NN
             val, = unpack('B', text[1])
             Mov.printVal2Reg(pc, convNum(text, 2), 'ch', val)
             pcInc = 2
-        elif mnemonic == 0xb1:  # mov cl, #12
+        elif mnemonic == 0xb1:  # mov cl, #NN
             val, = unpack('B', text[1])
             Mov.printVal2Reg(pc, convNum(text, 2), 'cl', val)
             pcInc = 2
@@ -52,10 +36,10 @@ class Mov(Mnemonic):
             val, = unpack('<H', text[2:4])
             Mov.printMem2Reg(pc, convNum(text, 4), 'sp', val)
             pcInc = 4
-        elif mnemonic == 0xc707: # mov [bx], #1324
+        elif mnemonic == 0xc707: # mov [bx], #NNNN
             Mov.printVal2Reg(pc, convNum(text, 4), '[bx]', convNum(text[2:4], 2))
             pcInc = 4
-        elif mnemonic == 0xc747: # mov [bx+x], #1234
+        elif mnemonic == 0xc747: # mov [bx+x], #NNNN
             displace = str(convNum(text[2], 1))
             Mov.printVal2Reg(
                 pc, convNum(text, 5), '[bx+'+displace+']', convNum(text[3:5], 2)
@@ -123,3 +107,9 @@ class Mov(Mnemonic):
     def printMem2Reg(pc, raw, reg, pos):
         inst = 'mov %s, [%04x]' % (reg, pos)
         printInst(pc, raw, inst)
+
+    def printVal2Ref(pc, raw, ref, val):
+        inst = 'mov [%s], %0x4' % (ref, val)
+        printInst(pc, raw, inst)
+
+

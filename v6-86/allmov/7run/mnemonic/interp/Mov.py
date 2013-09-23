@@ -8,33 +8,11 @@ class Mov(Mnemonic):
     @staticmethod
     def execute(pc, text, mnemonic):
 
-        if mnemonic == 0xb8:        # mov ax, #1234
+        if mnemonic & 0b10111000:   # mov (register), #NNNN
+            regList = ['ax', 'cx', 'dx', 'bx', 'sp', 'bp', 'si', 'di']
+            key = mnemonic & 0b00000111
             val, = unpack('<H', text[1:3])
-            Mov.mov2reg(pc, 'ax', val)
-            pcInc = 3
-        elif mnemonic == 0xbb:      # mov bx, #1234
-            val, = unpack('<H', text[1:3])
-            Mov.mov2reg(pc, 'bx', val)
-            pcInc = 3
-        elif mnemonic == 0xb9:      # mov cx, #1234
-            val, = unpack('<H', text[1:3])
-            Mov.mov2reg(pc, 'cx', val)
-            pcInc = 3
-        elif mnemonic == 0xba:      # mov dx, #1234
-            val, = unpack('<H', text[1:3])
-            Mov.mov2reg(pc, 'dx', val)
-            pcInc = 3
-        elif mnemonic == 0xbd:      # mov bp, #1234
-            val, = unpack('<H', text[1:3])
-            Mov.mov2reg(pc, 'bp', val)
-            pcInc = 3
-        elif mnemonic == 0xbe:      # mov si, #1234
-            val, = unpack('<H', text[1:3])
-            Mov.mov2reg(pc, 'si', val)
-            pcInc = 3
-        elif mnemonic == 0xbf:      # mov di, #1234
-            val, = unpack('<H', text[1:3])
-            Mov.mov2reg(pc, 'di', val)
+            Mov.mov2reg(pc, regList[key], val)
             pcInc = 3
         elif mnemonic == 0xb5:      # mov ch, #12
             val, = unpack('B', text[1])

@@ -18,3 +18,4 @@ def convBytes(num, length):
 
 def printInst(pc, nimonic, operand):
     print "%04x: %-13x %s" % (pc, nimonic, operand)
+

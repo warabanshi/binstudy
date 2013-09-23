@@ -25,7 +25,8 @@ class run7(object):
             self.interpret(self.text[self.pc:])
 
     def interpret(self, text):
-        if convNum(text, 1) in [0xb8, 0xbb, 0xb9, 0xba, 0xbd, 0xbe, 0xbf, 0xbc]:
+
+        if cmpFrontBit(convNum(text, 1), 0xb8):
             mov = self.lazyLoad('Mov')
             self.pc += mov.execute(self.pc, text, convNum(text, 1))
 
