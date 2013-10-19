@@ -11,7 +11,42 @@ class Mov(Mnemonic):
     def execute(cls, pc, text, instByte):
 
         if   0x88 <= instByte <= 0x8b:  # mov register/memory to/from register
-            None    # implement later
+            d   = (instByte & 0b10) >> 1
+            w   = instByte & 0b01
+            val, = unpack('B', text[1])
+            pcInc = 2
+
+            mode = (0b11000000 & val) >> 6
+            reg = (0b111000 & val) >> 3
+            r_m = (0b111 & val)
+
+            disp = 0
+            if mode == 0b00:
+                if r_m == 0b110:
+                    disp, = unpack('<H', text[2:4])
+                    pcInc += 2
+            elif mode == 0b01:
+                disp, = unpack('<b', text[2])
+                pcInc += 1
+            elif mode == 0b10:
+                disp, = unpack('<H', text[2:4])
+                pcInc += 2
+            elif mode == 0b11:
+                None
+
+            if mode == 0b11:
+                r_mStr = cls.regname[r_m]
+            else:
+                r_mStr = '[' + cls.getRegWithDisp(r_m, mode, disp) + ']'
+
+            if d == 1:      # d = 1 then "to" reg
+                valTo = cls.regname[reg]
+                valFrom = r_mStr
+            else:
+                valTo = r_mStr
+                valFrom = cls.regname[reg]
+
+            Mov.printReg2Reg(pc, convNum(text, pcInc), valTo, valFrom)
 
         elif 0xc6 <= instByte <= 0xc7:   # mov immediate to register/memory
             w   = instByte & 0b1
@@ -45,7 +80,7 @@ class Mov(Mnemonic):
 
         elif 0xb0 <= instByte <= 0xbf:   # mov immediate to register
             w   = (instByte & 0b00001000) >> 3
-            key = instByte & 0b00000111
+            reg = instByte & 0b00000111
             if w == 1:
                 data, = unpack('<H', text[1:3])
                 pcInc = 3
@@ -53,7 +88,7 @@ class Mov(Mnemonic):
                 data, = unpack('B', text[1])
                 pcInc = 2
 
-            Mov.printVal2Reg(pc, convNum(text, pcInc), cls.regname[key], data)
+            Mov.printVal2Reg(pc, convNum(text, pcInc), cls.regname[reg], data)
 
 
             '''

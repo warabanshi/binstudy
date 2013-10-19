@@ -41,31 +41,6 @@ class run7(object):
             0x8e == firstByte or 0x8c == firstByte
         ):
             self.pc += mov.execute(self.pc, text, firstByte)
-            '''
-        if convNum(text, 1) in [0xb8, 0xbb, 0xb9]:
-            mov = self.lazyLoad('Mov')
-            self.pc += mov.execute(self.pc, text, convNum(text, 1))
-
-        elif convNum(text, 1) in [0xb5, 0xb1]:
-            mov = self.lazyLoad('Mov')
-            self.pc += mov.execute(self.pc, text, convNum(text, 1))
-
-        elif convNum(text, 2) in [0xc707, 0xc747, 0xc607, 0xc647]:
-            mov = self.lazyLoad('Mov')
-            self.pc += mov.execute(self.pc, text, convNum(text, 2))
-
-        elif convNum(text, 2) in [0x8907, 0x894f, 0x890f]:
-            mov = self.lazyLoad('Mov')
-            self.pc += mov.execute(self.pc, text, convNum(text, 2))
-
-        elif convNum(text, 2) in [0x8807, 0x8867]:
-            mov = self.lazyLoad('Mov')
-            self.pc += mov.execute(self.pc, text, convNum(text, 2))
-
-        elif convNum(text, 2) in [0xc706, 0xc606]:
-            mov = self.lazyLoad('Mov')
-            self.pc += mov.execute(self.pc, text, convNum(text, 2))
-            '''
 
         elif convNum(text, 1) == 0xcd:
             intrpt = self.lazyLoad('Interrupt')
