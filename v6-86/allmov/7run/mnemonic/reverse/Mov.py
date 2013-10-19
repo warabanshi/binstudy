@@ -118,10 +118,16 @@ class Mov(Mnemonic):
             )
 
         elif instByte == 0x8e:          # mov register/memory to SegmentRegister
-            None
+            val, = unpack('B', text[1])
+            mode = (0b11000000 & val) >> 6
+            reg = (0b111000 & val) >> 3
+            r_m = 0b111 & val
 
         elif instByte == 0x8c:          # mov SegmentRegister to register/memory
-            None
+            val, = unpack('B', text[1])
+            mode = (0b11000000 & val) >> 6
+            reg = (0b111000 & val) >> 3
+            r_m = 0b111 & val
 
         else:
             raise Exception("unknown register name specified")
