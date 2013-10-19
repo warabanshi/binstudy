@@ -27,6 +27,10 @@ mov ax, 0x100
 mov 0xf, ax
 mov 0x100, ax
 
+! mov register/memory to SegmentRegister
+
+! mov SegmentRegister to register/memory
+
 mov ax, #0
 int 7
 .data1 1
