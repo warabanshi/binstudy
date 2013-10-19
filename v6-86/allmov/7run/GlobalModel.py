@@ -8,7 +8,6 @@ class GlobalModel(object):
     reg = {
         'ax': None
     }
-    stack = []          # stack
 
     @classmethod
     def setReverse(cls):
@@ -73,11 +72,3 @@ class GlobalModel(object):
     def getData(cls, offset, length):
         tail = offset + length
         return cls.alldata[offset:tail]
-
-    @classmethod
-    def stackPush(cls, val):
-        cls.stack.append(val)
-
-    @classmethod
-    def stackPop(cls):
-        return cls.stack.pop()

@@ -8,11 +8,17 @@ class Mov(Mnemonic):
     @staticmethod
     def execute(pc, text, mnemonic):
 
-        if mnemonic & 0b10111000:   # mov (register), #NNNN
-            regList = ['ax', 'cx', 'dx', 'bx', 'sp', 'bp', 'si', 'di']
-            key = mnemonic & 0b00000111
+        if mnemonic == 0xb8:        # mov ax, #1234
             val, = unpack('<H', text[1:3])
-            Mov.mov2reg(pc, regList[key], val)
+            Mov.mov2reg(pc, 'ax', val)
+            pcInc = 3
+        elif mnemonic == 0xbb:      # mov bx, #1234
+            val, = unpack('<H', text[1:3])
+            Mov.mov2reg(pc, 'bx', val)
+            pcInc = 3
+        elif mnemonic == 0xb9:      # mov cx, #1234
+            val, = unpack('<H', text[1:3])
+            Mov.mov2reg(pc, 'cx', val)
             pcInc = 3
         elif mnemonic == 0xb5:      # mov ch, #12
             val, = unpack('B', text[1])
@@ -22,10 +28,6 @@ class Mov(Mnemonic):
             val, = unpack('B', text[1])
             Mov.mov2reg(pc, 'cl', val)
             pcInc = 2
-        elif mnemonic == 0x8b26:    # mov sp, [0xNNNN]
-            val, = unpack('<H', text[2:4])
-            Mov.stackPush(val)
-            pcInc = 4
         elif mnemonic == 0xc707:    # mov [bx], #1234
             Mov.mov2derefer(pc, 'bx', text[2:4], 0)
             pcInc = 4
@@ -79,11 +81,3 @@ class Mov(Mnemonic):
     @staticmethod
     def mov2mem(pc, addr, val, displace):
         gm.setData(addr+displace, val)
-
-    @staticmethod
-    def stackPush(val):
-        gm.stackPush(val)
-
-    @staticmethod
-    def stackPop():
-        return gm.stackPop()

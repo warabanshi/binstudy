@@ -26,7 +26,23 @@ class run7(object):
 
     def interpret(self, text):
 
-        if cmpFrontBit(convNum(text, 1), 0xb8):
+        firstByte, = unpack('B', text[0])
+
+        mov     = self.lazyLoad('Mov')
+        intrpt  = self.lazyLoad('Interrupt')
+        sub     = self.lazyLoad('Sub')
+
+        if (
+            0x88 <= firstByte <= 0x8b or     # mov register/memory to/from register
+            0xb0 <= firstByte <= 0xbf or     # mov immediate to register
+            0xc6 <= firstByte <= 0xc7 or     # mov immediate to register/memory
+            0xa0 <= firstByte <= 0xa1 or     # mov memory to accumulator
+            0xa2 <= firstByte <= 0xa3 or     # mov accumulator to memory
+            0x8e == firstByte or 0x8c == firstByte
+        ):
+            self.pc += mov.execute(self.pc, text, firstByte)
+            '''
+        if convNum(text, 1) in [0xb8, 0xbb, 0xb9]:
             mov = self.lazyLoad('Mov')
             self.pc += mov.execute(self.pc, text, convNum(text, 1))
 
@@ -34,7 +50,7 @@ class run7(object):
             mov = self.lazyLoad('Mov')
             self.pc += mov.execute(self.pc, text, convNum(text, 1))
 
-        elif convNum(text, 2) in [0xc707, 0xc747, 0xc607, 0xc647, 0x8b26]:
+        elif convNum(text, 2) in [0xc707, 0xc747, 0xc607, 0xc647]:
             mov = self.lazyLoad('Mov')
             self.pc += mov.execute(self.pc, text, convNum(text, 2))
 
@@ -49,6 +65,7 @@ class run7(object):
         elif convNum(text, 2) in [0xc706, 0xc606]:
             mov = self.lazyLoad('Mov')
             self.pc += mov.execute(self.pc, text, convNum(text, 2))
+            '''
 
         elif convNum(text, 1) == 0xcd:
             intrpt = self.lazyLoad('Interrupt')
