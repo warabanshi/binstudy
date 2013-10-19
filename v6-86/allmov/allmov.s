@@ -19,6 +19,14 @@ mov ax, 2(bp)
 mov cx, bp
 mov cx, 0x100
 
+! mov memory to accumulator
+mov ax, 0xf
+mov ax, 0x100
+
+! mov accumulator to memory
+mov 0xf, ax
+mov 0x100, ax
+
 mov ax, #0
 int 7
 .data1 1

@@ -6,6 +6,7 @@ from mnemonic.Mnemonic import Mnemonic
 class Mov(Mnemonic):
 
     regname = ['ax', 'cx', 'dx', 'bx', 'sp', 'bp', 'si', 'di']
+    reg8bit = ['al', 'cl', 'dl', 'bl', 'ah', 'ch', 'dh', 'bh']
 
     @classmethod
     def execute(cls, pc, text, instByte):
@@ -90,86 +91,38 @@ class Mov(Mnemonic):
 
             Mov.printVal2Reg(pc, convNum(text, pcInc), cls.regname[reg], data)
 
+        elif 0xa0 <= instByte <= 0xa1:  # mov memory to accumulator
+            w = instByte & 0b1
 
-            '''
-        elif (mnemonic & 0xfc) == & 0b110011:   # mov immediate to register/memory
-            w = (mnemonic >> 24) & 1
-            mod = (mnemonic >> 22) & 0b11
-            r_div_m = (mnemonic >> 16) & 0b111
-            regList = ['bx+si', 'bx+di', 'bp+si', 'bp+di', 'si', 'di', 'bp', 'bx']
-            val, = unpack('<H', text[2:4])
-            Mov.printVal2Ref(pc ,convNum(text, 4), regList[r_div_m], val)
-            pcInc = 4
-
-        if mnemonic == 0xb8:    # mov ax, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'ax', val)
+            if w == 1:
+                addr, = unpack('<H', text[1:3])
+            else:
+                absent, addr = unpack('BB', text[1:3])
             pcInc = 3
-        elif mnemonic == 0xbb:  # mov bx, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'bx', val)
-            pcInc = 3
-        elif mnemonic == 0xb9:  # mov cx, #1
-            val, = unpack('<H', text[1:3])
-            Mov.printVal2Reg(pc, convNum(text, 3), 'cx', val)
-            pcInc = 3
-
-        elif instByte == 0xb5:  # mov ch, #12
-            val, = unpack('B', text[1])
-            Mov.printVal2Reg(pc, convNum(text, 2), 'ch', val)
-            pcInc = 2
-        elif instByte == 0xb1:  # mov cl, #12
-            val, = unpack('B', text[1])
-            Mov.printVal2Reg(pc, convNum(text, 2), 'cl', val)
-            pcInc = 2
-            '''
-        elif instByte == 0xc707: # mov [bx], #1324
-            Mov.printVal2Reg(pc, convNum(text, 4), '[bx]', convNum(text[2:4], 2))
-            pcInc = 4
-        elif instByte == 0xc747: # mov [bx+x], #1234
-            displace = str(convNum(text[2], 1))
-            Mov.printVal2Reg(
-                pc, convNum(text, 5), '[bx+'+displace+']', convNum(text[3:5], 2)
-            )
-            pcInc = 5
-        elif instByte == 0xc607: # mov ptr [bx], #12
-            Mov.printVal2Reg(pc, convNum(text, 3), 'byte [bx]', convNum(text[2], 1))
-            pcInc = 3
-        elif instByte == 0xc647: # mov ptr [bx+x], #12
-            displace = str(convNum(text[2], 1))
-            Mov.printVal2Reg(
-                pc, convNum(text, 4), 'byte [bx+'+displace+']', convNum(text[3], 1)
-            )
-            pcInc = 4
-        elif instByte == 0x8907: # mov [bx], ax
-            Mov.printReg2Reg(pc, convNum(text, 2), '[bx]', 'ax')
-            pcInc = 2
-        elif instByte == 0x8807: # mov [bx], al
-            Mov.printReg2Reg(pc, convNum(text, 2), '[bx]', 'al')
-            pcInc = 2
-        elif instByte == 0x8867: # mov [bx+x], ah
-            displace = str(convNum(text[2], 1))
+            
             Mov.printReg2Reg(
-                pc, convNum(text, 3), '[bx+'+displace+']', 'ah'
+                pc, convNum(text, pcInc), cls.regname[0], '['+hex(addr)+']'
             )
+
+        elif 0xa2 <= instByte <= 0xa3:  # mov accumulator to memory
+            w = instByte & 0b1
+            addr, = unpack('<H', text[1:3])
+            if w == 1:
+                addr, = unpack('<H', text[1:3])
+            else:
+                absent, addr = unpack('BB', text[1:3])
             pcInc = 3
-        elif instByte == 0x890f: # mov [bx], cx
-            Mov.printReg2Reg(pc, convNum(text, 2), '[bx]', 'cx')
-            pcInc = 2
-        elif instByte == 0x894f: # mov [bx+x], cx
-            displace = str(convNum(text[2], 1))
+            
             Mov.printReg2Reg(
-                pc, convNum(text, 3), '[bx+'+displace+']', 'cx'
+                pc, convNum(text, pcInc), '['+hex(addr)+']', cls.regname[0]
             )
-            pcInc = 3
-        elif instByte == 0xc706: # mov [1234], #1234
-            s = "[%04x]" % unpack('<H', text[2:4])
-            Mov.printVal2Mem(pc, convNum(text, 6), s, convNum(text[4:6], 2))
-            pcInc = 6
-        elif instByte == 0xc606: # mov byte [1234], #12
-            s = "byte [%04x]" % unpack('<H', text[2:4])
-            Mov.printVal2Mem(pc, convNum(text, 5), s, convNum(text[4], 1))
-            pcInc = 5
+
+        elif instByte == 0x8e:          # mov register/memory to SegmentRegister
+            None
+
+        elif instByte == 0x8c:          # mov SegmentRegister to register/memory
+            None
+
         else:
             raise Exception("unknown register name specified")
 

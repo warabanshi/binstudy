@@ -34,11 +34,12 @@ class run7(object):
 
         if (
             0x88 <= firstByte <= 0x8b or     # mov register/memory to/from register
-            0xb0 <= firstByte <= 0xbf or     # mov immediate to register
             0xc6 <= firstByte <= 0xc7 or     # mov immediate to register/memory
+            0xb0 <= firstByte <= 0xbf or     # mov immediate to register
             0xa0 <= firstByte <= 0xa1 or     # mov memory to accumulator
             0xa2 <= firstByte <= 0xa3 or     # mov accumulator to memory
-            0x8e == firstByte or 0x8c == firstByte
+            0x8e == firstByte or             # register/memory to SegmentRegister
+            0x8c == firstByte                # SegmentRegister to register/memory
         ):
             self.pc += mov.execute(self.pc, text, firstByte)
 
